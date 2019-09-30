@@ -16,6 +16,30 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".EditTermActivity"
+            android:label="@string/title_activity_edit_term"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".TermsActivity"
+            android:label="@string/title_activity_terms"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".EditCourseActivity"
+            android:label="@string/title_activity_edit_course"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".CourseActivity"
+            android:label="@string/title_activity_course"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".EditAssessmentActivity"
+            android:label="@string/title_activity_edit_assessment"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".AssessmentActivity"
+            android:label="@string/title_activity_assessment"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

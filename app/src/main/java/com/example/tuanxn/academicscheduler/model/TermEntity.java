@@ -31,6 +31,14 @@ public class TermEntity {
         this.termCourses = termCourses;
     }
 
+    // Used for sample data
+    public TermEntity(int id, String title, Date startDate, Date endDate) {
+        this.id = id;
+        this.title = title;
+        this.startDate = startDate;
+        this.endDate = endDate;
+    }
+
     public int getId() {
         return id;
     }
