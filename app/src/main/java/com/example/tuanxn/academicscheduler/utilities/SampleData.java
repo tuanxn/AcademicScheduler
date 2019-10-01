@@ -40,6 +40,8 @@ public class SampleData {
         assessments.add(new AssessmentEntity(1, 1, "MATH TEST", "OA", getDate("10/24/2019"), getDate("10/31/2019")));
         assessments.add(new AssessmentEntity(2, 2, "SCIENCE TEST", "OA", getDate("10/26/2019"), getDate("10/28/2019")));
         assessments.add(new AssessmentEntity(3, 3, "PULL UP TEST", "PA", getDate("10/27/2019"), getDate("10/27/2019")));
+        assessments.add(new AssessmentEntity(4, 4, "PULL UP TEST", "PA", getDate("10/27/2019"), getDate("10/27/2019")));
+        assessments.add(new AssessmentEntity(5, 5, "PULL UP TEST", "PA", getDate("10/27/2019"), getDate("10/27/2019")));
         return assessments;
     }
 }

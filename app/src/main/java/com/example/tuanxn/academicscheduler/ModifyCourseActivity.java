@@ -5,15 +5,32 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.tuanxn.academicscheduler.model.AssessmentEntity;
+import com.example.tuanxn.academicscheduler.ui.AssessmentAdapter;
+import com.example.tuanxn.academicscheduler.utilities.SampleData;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class ModifyCourseActivity extends AppCompatActivity {
+
+    @BindView(R.id.course_assessment_recycler_view)
+    RecyclerView courseAssessmentRecyclerView;
+    private List<AssessmentEntity> assessmentData = new ArrayList<>();
+    private AssessmentAdapter assessmentAdapter;
 
     @OnClick(R.id.addAssessmentButton)
     void fabClickHandler() {
@@ -28,6 +45,19 @@ public class ModifyCourseActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        ButterKnife.bind(this);
+        initRecyclerView();
+
+        try {
+            assessmentData.addAll(SampleData.getAssessments());
+            for (AssessmentEntity assessment: assessmentData) {
+                Log.i("assessment", assessment.toString());
+            }
+
+        }catch (Exception e) {
+
+        }
+
         //get the spinner from the xml
         Spinner dropdown = (Spinner)findViewById(R.id.courseStatus);
         Toast.makeText(this, dropdown.toString(), Toast.LENGTH_SHORT).show();
@@ -40,6 +70,15 @@ public class ModifyCourseActivity extends AppCompatActivity {
         dropdown.setAdapter(adapter);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    private void initRecyclerView() {
+        courseAssessmentRecyclerView.setHasFixedSize(true);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        courseAssessmentRecyclerView.setLayoutManager(layoutManager);
+
+        assessmentAdapter = new AssessmentAdapter(assessmentData, this);
+        courseAssessmentRecyclerView.setAdapter(assessmentAdapter);
     }
 
 }

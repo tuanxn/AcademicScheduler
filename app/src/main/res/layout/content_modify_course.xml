@@ -11,7 +11,7 @@
     <TextView
         android:id="@+id/course"
         android:layout_width="81dp"
-        android:layout_height="45dp"
+        android:layout_height="40dp"
         android:text="Course:"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -54,7 +54,7 @@
     <TextView
         android:id="@+id/textView5"
         android:layout_width="81dp"
-        android:layout_height="41dp"
+        android:layout_height="40dp"
         android:text="mName:"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -72,7 +72,7 @@
     <TextView
         android:id="@+id/textView"
         android:layout_width="82dp"
-        android:layout_height="41dp"
+        android:layout_height="40dp"
         android:text="End:"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -81,7 +81,7 @@
     <TextView
         android:id="@+id/textView6"
         android:layout_width="82dp"
-        android:layout_height="45dp"
+        android:layout_height="40dp"
         android:text="Start:"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -90,7 +90,7 @@
     <EditText
         android:id="@+id/courseStart"
         android:layout_width="286dp"
-        android:layout_height="45dp"
+        android:layout_height="40dp"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
@@ -107,7 +107,7 @@
     <EditText
         android:id="@+id/courseEnd"
         android:layout_width="283dp"
-        android:layout_height="45dp"
+        android:layout_height="40dp"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
@@ -187,12 +187,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:layout_marginBottom="@dimen/list_fab_margin"
+        android:layout_marginBottom="8dp"
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
         android:backgroundTint="@color/colorPrimary"
         app:fabSize="mini"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/course_assessment_recycler_view"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3"
@@ -202,7 +202,7 @@
     <TextView
         android:id="@+id/noteText"
         android:layout_width="0dp"
-        android:layout_height="43dp"
+        android:layout_height="39dp"
         android:layout_margin="8dp"
         android:layout_marginEnd="96dp"
         android:layout_marginLeft="8dp"
@@ -214,9 +214,9 @@
         android:maxLines="2"
         android:textColor="@color/list_text_color"
         android:textSize="@dimen/list_text_size"
-        app:layout_constraintBottom_toBottomOf="@+id/course_assessment_recycler_view"
+        app:layout_constraintBottom_toTopOf="@+id/course_assessment_recycler_view"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.09"
         app:layout_constraintStart_toEndOf="@+id/editNote"
         app:layout_constraintTop_toBottomOf="@+id/courseMentorEmail"
         app:layout_constraintVertical_bias="0.054" />
@@ -224,7 +224,7 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/course_assessment_recycler_view"
         android:layout_width="0dp"
-        android:layout_height="157dp"
+        android:layout_height="0dp"
         android:layout_marginBottom="8dp"
         android:layout_marginTop="8dp"
         android:clickable="true"
@@ -232,10 +232,8 @@
         android:focusableInTouchMode="true"
         android:scrollbars="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/noteText"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toBottomOf="@+id/noteText" />
 
 </android.support.constraint.ConstraintLayout>
