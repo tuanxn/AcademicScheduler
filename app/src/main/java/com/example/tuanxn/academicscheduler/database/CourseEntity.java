@@ -60,6 +60,21 @@ public class CourseEntity {
         this.courseAssessments = courseAssessments;
     }
 
+    // Create a new course with auto-incrementing
+    @Ignore
+    public CourseEntity(int termId, String title, Date startDate, Date endDate, String status, String mentorName, String mentorPhone, String mentorEmail, String notes) {
+
+        this.termId = termId;
+        this.title = title;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.status = status;
+        this.mentorName = mentorName;
+        this.mentorPhone = mentorPhone;
+        this.mentorEmail = mentorEmail;
+        this.notes = notes;
+    }
+
     // For sample data
     public CourseEntity(int id, int termId, String title, Date startDate, Date endDate, String status, String mentorName, String mentorPhone, String mentorEmail, String notes) {
 

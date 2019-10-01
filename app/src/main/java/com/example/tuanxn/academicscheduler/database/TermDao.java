@@ -31,7 +31,7 @@ public interface TermDao {
     int deleteAll();
 
     @Query("SELECT COUNT(*) FROM terms")
-    int getCount();
+    int getTermCount();
 
 
 

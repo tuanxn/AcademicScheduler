@@ -1,8 +1,10 @@
 package com.example.tuanxn.academicscheduler;
 
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -44,18 +46,32 @@ public class TermsActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         ButterKnife.bind(this);
-        initViewModel();
         initRecyclerView();
-
-        termData.addAll(tViewModel.mTerms);
-        for (TermEntity term: termData) {
-            Log.i("term", term.toString());
-        }
+        initViewModel();
 
     }
 
     private void initViewModel() {
+
+        final Observer<List<TermEntity>> termsObserver = new Observer<List<TermEntity>>() {
+            @Override
+            public void onChanged(@Nullable List<TermEntity> termEntities) {
+                termData.clear();
+                termData.addAll(termEntities);
+
+                if (termAdapter == null) {
+                    termAdapter = new TermAdapter(termData, TermsActivity.this);
+                    termRecyclerView.setAdapter(termAdapter);
+                }else {
+                    termAdapter.notifyDataSetChanged();
+                }
+
+            }
+        };
+
         tViewModel = ViewModelProviders.of(this).get(TermViewModel.class);
+
+        tViewModel.mTerms.observe(this, termsObserver);
     }
 
     private void initRecyclerView() {
@@ -63,8 +79,7 @@ public class TermsActivity extends AppCompatActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         termRecyclerView.setLayoutManager(layoutManager);
 
-        termAdapter = new TermAdapter(termData, this);
-        termRecyclerView.setAdapter(termAdapter);
+
     }
 
 }

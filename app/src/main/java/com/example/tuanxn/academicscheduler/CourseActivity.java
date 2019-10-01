@@ -1,7 +1,9 @@
 package com.example.tuanxn.academicscheduler;
 
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -23,6 +25,7 @@ public class CourseActivity extends AppCompatActivity {
 
     @BindView(R.id.course_recycler_view)
     RecyclerView courseRecyclerView;
+
     private List<CourseEntity> courseData = new ArrayList<>();
     private CourseAdapter courseAdapter;
     private CourseViewModel cViewModel;
@@ -35,17 +38,31 @@ public class CourseActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         ButterKnife.bind(this);
-        initViewModel();
         initRecyclerView();
+        initViewModel();
 
-        courseData.addAll(cViewModel.mCourses);
-        for (CourseEntity course: courseData) {
-            Log.i("course", course.toString());
-        }
     }
 
     private void initViewModel() {
+
+        final Observer<List<CourseEntity>> coursesObserver = new Observer<List<CourseEntity>>() {
+            @Override
+            public void onChanged(@Nullable List<CourseEntity> courseEntities) {
+                courseData.clear();
+                courseData.addAll(courseEntities);
+                if (courseAdapter == null) {
+                    courseAdapter = new CourseAdapter(courseData, CourseActivity.this);
+                    courseRecyclerView.setAdapter(courseAdapter);
+                }else {
+                    courseAdapter.notifyDataSetChanged();
+                }
+
+            }
+        };
+
         cViewModel = ViewModelProviders.of(this).get(CourseViewModel.class);
+
+        cViewModel.mCourses.observe(this, coursesObserver);
     }
 
     private void initRecyclerView() {
@@ -53,8 +70,7 @@ public class CourseActivity extends AppCompatActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         courseRecyclerView.setLayoutManager(layoutManager);
 
-        courseAdapter = new CourseAdapter(courseData, this);
-        courseRecyclerView.setAdapter(courseAdapter);
+
     }
 
 }

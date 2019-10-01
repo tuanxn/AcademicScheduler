@@ -1,8 +1,10 @@
 package com.example.tuanxn.academicscheduler;
 
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -28,6 +30,7 @@ public class ModifyCourseActivity extends AppCompatActivity {
 
     @BindView(R.id.course_assessment_recycler_view)
     RecyclerView courseAssessmentRecyclerView;
+
     private List<AssessmentEntity> assessmentData = new ArrayList<>();
     private AssessmentAdapter assessmentAdapter;
     private ModifyCourseViewModel mcViewModel;
@@ -35,6 +38,12 @@ public class ModifyCourseActivity extends AppCompatActivity {
     @OnClick(R.id.addAssessmentButton)
     void fabClickHandler() {
         Intent intent = new Intent(this, ModifyAssessmentActivity.class);
+        startActivity(intent);
+    }
+
+    @OnClick(R.id.editNote)
+    void editClickHandler() {
+        Intent intent = new Intent(this, NoteActivity.class);
         startActivity(intent);
     }
 
@@ -46,13 +55,8 @@ public class ModifyCourseActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         ButterKnife.bind(this);
-        initViewModel();
         initRecyclerView();
-
-        assessmentData.addAll(mcViewModel.mAssessments);
-        for (AssessmentEntity assessment: assessmentData) {
-            Log.i("assessment", assessment.toString());
-        }
+        initViewModel();
 
 
         //get the spinner from the xml
@@ -70,16 +74,30 @@ public class ModifyCourseActivity extends AppCompatActivity {
     }
 
     private void initViewModel() {
+
+        final Observer<List<AssessmentEntity>> assessmentsObserver = new Observer<List<AssessmentEntity>>() {
+            @Override
+            public void onChanged(@Nullable List<AssessmentEntity> assessmentEntities) {
+                assessmentData.clear();
+                assessmentData.addAll(assessmentEntities);
+
+                if (assessmentAdapter == null) {
+                    assessmentAdapter = new AssessmentAdapter(assessmentData, ModifyCourseActivity.this);
+                    courseAssessmentRecyclerView.setAdapter(assessmentAdapter);
+                }else {
+                    assessmentAdapter.notifyDataSetChanged();
+                }
+            }
+        };
+
         mcViewModel = ViewModelProviders.of(this).get(ModifyCourseViewModel.class);
+        mcViewModel.mcAssessments.observe(this, assessmentsObserver);
     }
 
     private void initRecyclerView() {
         courseAssessmentRecyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         courseAssessmentRecyclerView.setLayoutManager(layoutManager);
-
-        assessmentAdapter = new AssessmentAdapter(assessmentData, this);
-        courseAssessmentRecyclerView.setAdapter(assessmentAdapter);
     }
 
 }
