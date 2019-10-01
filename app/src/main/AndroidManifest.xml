@@ -17,29 +17,44 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".EditTermActivity"
-            android:label="@string/title_activity_edit_term"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".TermsActivity"
             android:label="@string/title_activity_terms"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".EditCourseActivity"
-            android:label="@string/title_activity_edit_course"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".CourseActivity"
             android:label="@string/title_activity_course"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".EditAssessmentActivity"
-            android:label="@string/title_activity_edit_assessment"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".AssessmentActivity"
             android:label="@string/title_activity_assessment"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ModifyTermActivity"
+            android:label="@string/title_activity_modify_term"
+            android:parentActivityName=".TermsActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.tuanxn.academicscheduler.TermsActivity" />
+        </activity>
+        <activity
+            android:name=".ModifyCourseActivity"
+            android:label="@string/title_activity_modify_course"
+            android:parentActivityName=".CourseActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.tuanxn.academicscheduler.CourseActivity" />
+        </activity>
+        <activity
+            android:name=".ModifyAssessmentActivity"
+            android:label="@string/title_activity_modify_assessment"
+            android:parentActivityName=".AssessmentActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.tuanxn.academicscheduler.AssessmentActivity" />
+        </activity>
     </application>
 
 </manifest>

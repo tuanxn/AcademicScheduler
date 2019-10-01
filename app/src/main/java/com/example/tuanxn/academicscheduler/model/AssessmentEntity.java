@@ -35,6 +35,8 @@ public class AssessmentEntity {
         this.endDate = endDate;
     }
 
+
+
     public int getId() {
         return id;
     }

@@ -1,5 +1,6 @@
 package com.example.tuanxn.academicscheduler;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -7,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 
 import com.example.tuanxn.academicscheduler.R;
@@ -19,11 +21,19 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class TermsActivity extends AppCompatActivity {
 
     @BindView(R.id.term_recycler_view)
     RecyclerView termRecyclerView;
+
+    @OnClick(R.id.termAddButton)
+    void fabClickHandler() {
+        Intent intent = new Intent(this, ModifyTermActivity.class);
+        startActivity(intent);
+    }
+
     private List<TermEntity> termData = new ArrayList<>();
     private TermAdapter termAdapter;
 
@@ -37,17 +47,11 @@ public class TermsActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         initRecyclerView();
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
         try {
             termData.addAll(SampleData.getTerms());
+            for (TermEntity term: termData) {
+                Log.i("term", term.toString());
+            }
 
         }catch (Exception e) {
 

@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.tuanxn.academicscheduler.R;
-import com.example.tuanxn.academicscheduler.model.TermEntity;
+import com.example.tuanxn.academicscheduler.model.AssessmentEntity;
 import com.example.tuanxn.academicscheduler.utilities.DateConverter;
 
 import java.util.List;
@@ -18,13 +18,13 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class TermAdapter extends RecyclerView.Adapter<TermAdapter.ViewHolder> {
+public class AssessmentAdapter extends RecyclerView.Adapter<AssessmentAdapter.ViewHolder> {
 
-    private final List<TermEntity> mTerms;
+    private final List<AssessmentEntity> mAssessments;
     private final Context mContext;
 
-    public TermAdapter(List<TermEntity> mTerms, Context mContext) {
-        this.mTerms = mTerms;
+    public AssessmentAdapter(List<AssessmentEntity> mAssessments, Context mContext) {
+        this.mAssessments = mAssessments;
         this.mContext = mContext;
     }
 
@@ -38,14 +38,14 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        final TermEntity term = mTerms.get(position);
-        holder.mTextView.setText(term.getTitle() + "\nStart: " + DateConverter.dateToString(term.getStartDate()) + " - End: " + DateConverter.dateToString(term.getEndDate()));
-
+        final AssessmentEntity assessment = mAssessments.get(position);
+        holder.mTextView.setText(assessment.getType() + ": " + assessment.getTitle() + "\nDue: " + DateConverter.dateToString(assessment.getEndDate()));
     }
+
 
     @Override
     public int getItemCount() {
-        return mTerms.size();
+        return mAssessments.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
