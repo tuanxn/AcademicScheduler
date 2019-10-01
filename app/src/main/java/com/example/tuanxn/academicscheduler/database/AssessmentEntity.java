@@ -1,8 +1,14 @@
-package com.example.tuanxn.academicscheduler.model;
+package com.example.tuanxn.academicscheduler.database;
+
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.PrimaryKey;
 
 import java.util.Date;
 
+@Entity(tableName = "assessments")
 public class AssessmentEntity {
+    @PrimaryKey(autoGenerate = true)
     private int id;
     private int courseId;
     private String title;
@@ -10,7 +16,9 @@ public class AssessmentEntity {
     private Date startDate;
     private Date endDate;
 
+
     // Empty Assessment
+    @Ignore
     public AssessmentEntity() {
 
     }
@@ -27,6 +35,7 @@ public class AssessmentEntity {
     }
 
     // Create a new assessment with auto-incrementing id
+    @Ignore
     public AssessmentEntity(int courseId, String title, String type, Date startDate, Date endDate) {
         this.courseId = courseId;
         this.title = title;

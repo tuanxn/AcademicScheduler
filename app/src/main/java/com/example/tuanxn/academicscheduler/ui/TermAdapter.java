@@ -3,14 +3,13 @@ package com.example.tuanxn.academicscheduler.ui;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.tuanxn.academicscheduler.R;
-import com.example.tuanxn.academicscheduler.model.TermEntity;
+import com.example.tuanxn.academicscheduler.database.TermEntity;
 import com.example.tuanxn.academicscheduler.utilities.DateConverter;
 
 import java.util.List;

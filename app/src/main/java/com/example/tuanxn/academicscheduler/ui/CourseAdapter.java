@@ -7,10 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.tuanxn.academicscheduler.R;
-import com.example.tuanxn.academicscheduler.model.CourseEntity;
+import com.example.tuanxn.academicscheduler.database.CourseEntity;
 import com.example.tuanxn.academicscheduler.utilities.DateConverter;
 
 import java.util.List;

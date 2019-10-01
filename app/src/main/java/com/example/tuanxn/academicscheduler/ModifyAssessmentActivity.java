@@ -1,5 +1,6 @@
 package com.example.tuanxn.academicscheduler;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -9,14 +10,20 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
+import com.example.tuanxn.academicscheduler.viewmodel.ModifyAssessmentViewModel;
+
+import butterknife.ButterKnife;
+
 public class ModifyAssessmentActivity extends AppCompatActivity {
+
+    private ModifyAssessmentViewModel maViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_modify_assessment);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -29,6 +36,13 @@ public class ModifyAssessmentActivity extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
         //set the spinners adapter to the previously created one.
         dropdown.setAdapter(adapter);
+
+        ButterKnife.bind(this);
+        initViewModel();
+    }
+
+    private void initViewModel() {
+        maViewModel = ViewModelProviders.of(this).get(ModifyAssessmentViewModel.class);
     }
 
 }

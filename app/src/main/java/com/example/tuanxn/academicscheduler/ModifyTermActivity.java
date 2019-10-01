@@ -1,19 +1,18 @@
 package com.example.tuanxn.academicscheduler;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.View;
 
-import com.example.tuanxn.academicscheduler.model.CourseEntity;
+import com.example.tuanxn.academicscheduler.database.CourseEntity;
 import com.example.tuanxn.academicscheduler.ui.CourseAdapter;
 import com.example.tuanxn.academicscheduler.utilities.SampleData;
+import com.example.tuanxn.academicscheduler.viewmodel.ModifyTermViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +27,7 @@ public class ModifyTermActivity extends AppCompatActivity {
     RecyclerView termCourseRecyclerView;
     private List<CourseEntity> courseData = new ArrayList<>();
     private CourseAdapter courseAdapter;
+    private ModifyTermViewModel mtViewModel;
 
     @OnClick(R.id.addCourseButton)
     void fabClickHandler() {
@@ -39,23 +39,24 @@ public class ModifyTermActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_modify_term);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         ButterKnife.bind(this);
+        initViewModel();
         initRecyclerView();
 
-        try {
-            courseData.addAll(SampleData.getCourses());
-            for (CourseEntity course: courseData) {
-                Log.i("course", course.toString());
-            }
-
-        }catch (Exception e) {
-
+        courseData.addAll(mtViewModel.mCourses);
+        for (CourseEntity course: courseData) {
+            Log.i("course", course.toString());
         }
 
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    private void initViewModel() {
+        mtViewModel = ViewModelProviders.of(this).get(ModifyTermViewModel.class);
     }
 
     private void initRecyclerView() {

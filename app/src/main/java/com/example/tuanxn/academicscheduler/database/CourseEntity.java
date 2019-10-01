@@ -1,9 +1,15 @@
-package com.example.tuanxn.academicscheduler.model;
+package com.example.tuanxn.academicscheduler.database;
+
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.PrimaryKey;
 
 import java.util.Date;
 import java.util.List;
 
+@Entity(tableName = "courses")
 public class CourseEntity {
+    @PrimaryKey(autoGenerate = true)
     private int id;
     private int termId;
     private String title;
@@ -14,13 +20,16 @@ public class CourseEntity {
     private String mentorPhone;
     private String mentorEmail;
     private String notes;
+    @Ignore
     private List<AssessmentEntity> courseAssessments;
 
     // Empty Course
+    @Ignore
     public CourseEntity() {
     }
 
     // Used to update an existing course
+    @Ignore
     public CourseEntity(int id, int termId, String title, Date startDate, Date endDate, String status, String mentorName, String mentorPhone, String mentorEmail, String notes, List<AssessmentEntity> courseAssessments) {
         this.id = id;
         this.termId = termId;
@@ -36,6 +45,7 @@ public class CourseEntity {
     }
 
     // Create a new course with auto-incrementing
+    @Ignore
     public CourseEntity(int termId, String title, Date startDate, Date endDate, String status, String mentorName, String mentorPhone, String mentorEmail, String notes, List<AssessmentEntity> courseAssessments) {
 
         this.termId = termId;

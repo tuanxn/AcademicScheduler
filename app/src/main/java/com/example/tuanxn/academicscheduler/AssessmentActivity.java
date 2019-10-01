@@ -1,18 +1,17 @@
 package com.example.tuanxn.academicscheduler;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.View;
 
-import com.example.tuanxn.academicscheduler.model.AssessmentEntity;
+import com.example.tuanxn.academicscheduler.database.AssessmentEntity;
 import com.example.tuanxn.academicscheduler.ui.AssessmentAdapter;
 import com.example.tuanxn.academicscheduler.utilities.SampleData;
+import com.example.tuanxn.academicscheduler.viewmodel.AssessmentViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +25,7 @@ public class AssessmentActivity extends AppCompatActivity {
     RecyclerView assessmentRecyclerView;
     private List<AssessmentEntity> assessmentData = new ArrayList<>();
     private AssessmentAdapter assessmentAdapter;
+    private AssessmentViewModel aViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,18 +35,18 @@ public class AssessmentActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         ButterKnife.bind(this);
+        initViewModel();
         initRecyclerView();
 
-
-        try {
-            assessmentData.addAll(SampleData.getAssessments());
-            for (AssessmentEntity assessment: assessmentData) {
-                Log.i("assessment", assessment.toString());
-            }
-
-        }catch (Exception e) {
-
+        assessmentData.addAll(aViewModel.mAssessments);
+        for (AssessmentEntity assessment: assessmentData) {
+            Log.i("assessment", assessment.toString());
         }
+
+    }
+
+    private void initViewModel() {
+        aViewModel = ViewModelProviders.of(this).get(AssessmentViewModel.class);
     }
 
     private void initRecyclerView() {

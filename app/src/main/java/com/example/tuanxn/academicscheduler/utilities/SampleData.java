@@ -1,8 +1,8 @@
 package com.example.tuanxn.academicscheduler.utilities;
 
-import com.example.tuanxn.academicscheduler.model.AssessmentEntity;
-import com.example.tuanxn.academicscheduler.model.CourseEntity;
-import com.example.tuanxn.academicscheduler.model.TermEntity;
+import com.example.tuanxn.academicscheduler.database.AssessmentEntity;
+import com.example.tuanxn.academicscheduler.database.CourseEntity;
+import com.example.tuanxn.academicscheduler.database.TermEntity;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

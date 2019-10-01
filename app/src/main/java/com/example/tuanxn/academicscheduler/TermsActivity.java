@@ -1,20 +1,18 @@
 package com.example.tuanxn.academicscheduler;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.View;
 
-import com.example.tuanxn.academicscheduler.R;
-import com.example.tuanxn.academicscheduler.model.TermEntity;
+import com.example.tuanxn.academicscheduler.database.TermEntity;
 import com.example.tuanxn.academicscheduler.ui.TermAdapter;
 import com.example.tuanxn.academicscheduler.utilities.SampleData;
+import com.example.tuanxn.academicscheduler.viewmodel.TermViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +34,7 @@ public class TermsActivity extends AppCompatActivity {
 
     private List<TermEntity> termData = new ArrayList<>();
     private TermAdapter termAdapter;
+    private TermViewModel tViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,18 +44,18 @@ public class TermsActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         ButterKnife.bind(this);
+        initViewModel();
         initRecyclerView();
 
-        try {
-            termData.addAll(SampleData.getTerms());
-            for (TermEntity term: termData) {
-                Log.i("term", term.toString());
-            }
-
-        }catch (Exception e) {
-
+        termData.addAll(tViewModel.mTerms);
+        for (TermEntity term: termData) {
+            Log.i("term", term.toString());
         }
 
+    }
+
+    private void initViewModel() {
+        tViewModel = ViewModelProviders.of(this).get(TermViewModel.class);
     }
 
     private void initRecyclerView() {

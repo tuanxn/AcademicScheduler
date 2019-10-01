@@ -1,19 +1,17 @@
 package com.example.tuanxn.academicscheduler;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.View;
 
-import com.example.tuanxn.academicscheduler.model.CourseEntity;
-import com.example.tuanxn.academicscheduler.model.TermEntity;
+import com.example.tuanxn.academicscheduler.database.CourseEntity;
 import com.example.tuanxn.academicscheduler.ui.CourseAdapter;
 import com.example.tuanxn.academicscheduler.utilities.SampleData;
+import com.example.tuanxn.academicscheduler.viewmodel.CourseViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +25,7 @@ public class CourseActivity extends AppCompatActivity {
     RecyclerView courseRecyclerView;
     private List<CourseEntity> courseData = new ArrayList<>();
     private CourseAdapter courseAdapter;
+    private CourseViewModel cViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,18 +35,17 @@ public class CourseActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         ButterKnife.bind(this);
+        initViewModel();
         initRecyclerView();
 
-
-        try {
-            courseData.addAll(SampleData.getCourses());
-            for (CourseEntity course: courseData) {
-                Log.i("course", course.toString());
-            }
-
-        }catch (Exception e) {
-
+        courseData.addAll(cViewModel.mCourses);
+        for (CourseEntity course: courseData) {
+            Log.i("course", course.toString());
         }
+    }
+
+    private void initViewModel() {
+        cViewModel = ViewModelProviders.of(this).get(CourseViewModel.class);
     }
 
     private void initRecyclerView() {
