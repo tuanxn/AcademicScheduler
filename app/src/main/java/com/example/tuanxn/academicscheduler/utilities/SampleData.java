@@ -29,9 +29,9 @@ public class SampleData {
 
     public static List<CourseEntity> getCourses() throws Exception {
         List<CourseEntity> courses = new ArrayList<>();
-        courses.add(new CourseEntity(1, "MATH", getDate("10/05/2019"), getDate("10/20/2019"), "Pending", "Tuan", "555", "tuan@uci.gmail", "test"));
-        courses.add(new CourseEntity(2, "SCIENCE", getDate("10/21/2019"), getDate("10/25/2019"), "Pending", "Tuan", "555", "tuan@uci.gmail", "test"));
-        courses.add(new CourseEntity(3, "PE", getDate("10/26/2019"), getDate("10/31/2019"), "Pending", "Tuan", "555", "tuan@uci.gmail", "test"));
+        courses.add(new CourseEntity(1, "MATH", getDate("10/05/2019"), getDate("10/20/2019"), "Plan to Take", "Tuan", "555", "tuan@uci.gmail", "test"));
+        courses.add(new CourseEntity(2, "SCIENCE", getDate("10/21/2019"), getDate("10/25/2019"), "Completed", "Tuan", "555", "tuan@uci.gmail", "test"));
+        courses.add(new CourseEntity(3, "PE", getDate("10/26/2019"), getDate("10/31/2019"), "Dropped", "Tuan", "555", "tuan@uci.gmail", "test"));
         return courses;
     }
 

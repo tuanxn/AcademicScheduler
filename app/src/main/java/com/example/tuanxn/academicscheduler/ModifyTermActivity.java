@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.example.tuanxn.academicscheduler.database.AppRepository;
 import com.example.tuanxn.academicscheduler.database.CourseEntity;
 import com.example.tuanxn.academicscheduler.database.TermEntity;
 import com.example.tuanxn.academicscheduler.ui.CourseAdapter;
@@ -48,10 +49,17 @@ public class ModifyTermActivity extends AppCompatActivity {
     private boolean mNewTerm;
 
     @OnClick(R.id.addCourseButton)
-    void fabClickHandler() throws ParseException {
-        saveAndReturn();
-        Intent intent = new Intent(this, ModifyCourseActivity.class);
-        startActivity(intent);
+    void fabClickHandler() {
+
+        try {
+            saveAndReturn();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Log.i("test", "TermId: " + Long.toString(AppRepository.createdTermId));
+            Intent intent = new Intent(this, ModifyCourseActivity.class);
+            intent.putExtra(TERM_ID_KEY, AppRepository.createdTermId);
+            startActivity(intent);
     }
 
     @Override
@@ -103,7 +111,7 @@ public class ModifyTermActivity extends AppCompatActivity {
             setTitle("New term");
             mNewTerm = true;
         }else {
-            setTitle("Edit note");
+            setTitle("Edit term");
             int termId = extras.getInt(TERM_ID_KEY);
             mtViewModel.loadData(termId);
         }

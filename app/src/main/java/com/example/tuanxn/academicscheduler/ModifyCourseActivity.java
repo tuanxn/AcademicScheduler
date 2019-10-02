@@ -12,13 +12,17 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.tuanxn.academicscheduler.database.AssessmentEntity;
+import com.example.tuanxn.academicscheduler.database.CourseEntity;
 import com.example.tuanxn.academicscheduler.ui.AssessmentAdapter;
+import com.example.tuanxn.academicscheduler.utilities.DateConverter;
 import com.example.tuanxn.academicscheduler.utilities.SampleData;
 import com.example.tuanxn.academicscheduler.viewmodel.ModifyCourseViewModel;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,14 +30,34 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.example.tuanxn.academicscheduler.utilities.Constants.COURSE_ID_KEY;
+
 public class ModifyCourseActivity extends AppCompatActivity {
 
     @BindView(R.id.course_assessment_recycler_view)
     RecyclerView courseAssessmentRecyclerView;
 
+    @BindView(R.id.courseTitle)
+    TextView title;
+    @BindView(R.id.courseStart)
+    TextView courseStart;
+    @BindView(R.id.courseEnd)
+    TextView courseEnd;
+    @BindView(R.id.courseStatus)
+    Spinner dropdown;
+    @BindView(R.id.courseMentorName2)
+    TextView courseMentorName;
+    @BindView(R.id.courseMentorPhone2)
+    TextView courseMentorPhone;
+    @BindView(R.id.courseMentorEmail)
+    TextView courseMentorEmail;
+
     private List<AssessmentEntity> assessmentData = new ArrayList<>();
     private AssessmentAdapter assessmentAdapter;
     private ModifyCourseViewModel mcViewModel;
+    private static String courseStatus;
+    private boolean mNewCourse;
+
 
     @OnClick(R.id.addAssessmentButton)
     void fabClickHandler() {
@@ -92,6 +116,44 @@ public class ModifyCourseActivity extends AppCompatActivity {
 
         mcViewModel = ViewModelProviders.of(this).get(ModifyCourseViewModel.class);
         mcViewModel.mcAssessments.observe(this, assessmentsObserver);
+        mcViewModel.mLiveCourse.observe(this, new Observer<CourseEntity>() {
+            @Override
+            public void onChanged(@Nullable CourseEntity courseEntity) {
+                title.setText(courseEntity.getTitle());
+                courseStart.setText(DateConverter.dateToString(courseEntity.getStartDate()));
+                courseEnd.setText(DateConverter.dateToString(courseEntity.getEndDate()));
+                courseStatus = courseEntity.getStatus();
+                switch (courseStatus) {
+                    case "Plan to Take":
+                        dropdown.setSelection(0);
+                        break;
+                    case "In Progress":
+                        dropdown.setSelection(1);
+                        break;
+                    case "Completed":
+                        dropdown.setSelection(2);
+                        break;
+                    case "Dropped":
+                        dropdown.setSelection(3);
+                        break;
+                    default:
+                }
+                courseMentorName.setText(courseEntity.getMentorName());
+                courseMentorPhone.setText(courseEntity.getMentorPhone());
+                courseMentorEmail.setText(courseEntity.getMentorEmail());
+
+            }
+        });
+
+        Bundle extras = getIntent().getExtras();
+        if (extras == null) {
+            setTitle("New course");
+            mNewCourse = true;
+        }else {
+            setTitle("Edit course");
+            int courseId = extras.getInt(COURSE_ID_KEY);
+            mcViewModel.loadData(courseId);
+        }
     }
 
     private void initRecyclerView() {

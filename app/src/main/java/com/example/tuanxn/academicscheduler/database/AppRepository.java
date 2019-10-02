@@ -14,6 +14,7 @@ import java.util.concurrent.Executors;
 public class AppRepository {
 
     private static AppRepository ourInstance;
+    public static long createdTermId;
 
     public LiveData<List<TermEntity>> mTerms;
     public LiveData<List<CourseEntity>> mCourses;
@@ -94,18 +95,17 @@ public class AppRepository {
         return mDb.termDao().getById(termId);
     }
 
-    public Long insertTerm(final TermEntity term) {
-        executor.submit(new Callable<Long>() {
-            public Long call() throws Exception {
-                return mDb.termDao().insert((term));
+    public void insertTerm(final TermEntity term) {
+
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                createdTermId = mDb.termDao().insert(term);
             }
         });
+    }
 
-//        executor.execute(new Runnable() {
-//            @Override
-//            public void run() {
-//                return mDb.termDao().insert(term);
-//            }
-//        });
+    public CourseEntity getCourseById(int courseId) {
+        return mDb.courseDao().getById(courseId);
     }
 }
