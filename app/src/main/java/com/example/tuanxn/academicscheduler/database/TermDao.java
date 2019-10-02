@@ -13,7 +13,7 @@ import java.util.List;
 public interface TermDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(TermEntity termEntity);
+    long insert(TermEntity termEntity);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(List<TermEntity> terms);

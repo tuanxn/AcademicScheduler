@@ -37,11 +37,11 @@ public class SampleData {
 
     public static List<AssessmentEntity> getAssessments() throws Exception {
         List<AssessmentEntity> assessments = new ArrayList<>();
-        assessments.add(new AssessmentEntity(1, "MATH TEST", "OA", getDate("10/24/2019"), getDate("10/31/2019")));
-        assessments.add(new AssessmentEntity(2, "SCIENCE TEST", "OA", getDate("10/26/2019"), getDate("10/28/2019")));
-        assessments.add(new AssessmentEntity(3, "PULL UP TEST", "PA", getDate("10/27/2019"), getDate("10/27/2019")));
-        assessments.add(new AssessmentEntity(4, "PULL UP TEST", "PA", getDate("10/27/2019"), getDate("10/27/2019")));
-        assessments.add(new AssessmentEntity(5, "PULL UP TEST", "PA", getDate("10/27/2019"), getDate("10/27/2019")));
+        assessments.add(new AssessmentEntity(1, "MATH TEST", "Objective Assessment", getDate("10/24/2019"), getDate("10/31/2019")));
+        assessments.add(new AssessmentEntity(2, "SCIENCE TEST", "Objective Assessment", getDate("10/26/2019"), getDate("10/28/2019")));
+        assessments.add(new AssessmentEntity(3, "PULL UP TEST", "Performance Assessment", getDate("10/27/2019"), getDate("10/27/2019")));
+        assessments.add(new AssessmentEntity(4, "PULL UP TEST", "Performance Assessment", getDate("10/27/2019"), getDate("10/27/2019")));
+        assessments.add(new AssessmentEntity(5, "PULL UP TEST", "Performance Assessment", getDate("10/27/2019"), getDate("10/27/2019")));
         return assessments;
     }
 }

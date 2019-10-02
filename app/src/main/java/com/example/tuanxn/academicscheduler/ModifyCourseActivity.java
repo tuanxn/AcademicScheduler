@@ -63,7 +63,7 @@ public class ModifyCourseActivity extends AppCompatActivity {
         Spinner dropdown = (Spinner)findViewById(R.id.courseStatus);
         Toast.makeText(this, dropdown.toString(), Toast.LENGTH_SHORT).show();
         //create a list of items for the spinner.
-        String[] items = new String[]{"In Progress", "Completed", "Dropped", "Plan to Take"};
+        String[] items = new String[]{"Plan to Take", "In Progress", "Completed", "Dropped"};
         //create an adapter to describe how the items are displayed, adapters are used in several places in android.
         //There are multiple variations of this, but this is the basic variant.
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);

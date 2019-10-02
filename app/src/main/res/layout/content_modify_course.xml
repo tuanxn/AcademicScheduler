@@ -190,7 +190,7 @@
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
-        android:backgroundTint="@color/colorPrimary"
+        android:backgroundTint="@color/colorPrimaryDark"
         app:fabSize="mini"
         app:layout_constraintBottom_toTopOf="@+id/course_assessment_recycler_view"
         app:layout_constraintLeft_toLeftOf="parent"

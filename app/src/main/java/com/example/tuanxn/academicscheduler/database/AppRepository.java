@@ -7,6 +7,7 @@ import android.util.Log;
 import com.example.tuanxn.academicscheduler.utilities.SampleData;
 
 import java.util.List;
+import java.util.concurrent.Callable;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -74,5 +75,37 @@ public class AppRepository {
                 mDb.assessmentDao().deleteAll();
             }
         });
+    }
+
+    public AssessmentEntity getAssessmentById(int assessmentId) {
+        return mDb.assessmentDao().getById(assessmentId);
+    }
+
+    public void insertAssessment(final AssessmentEntity assessment) {
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                mDb.assessmentDao().insert(assessment);
+            }
+        });
+    }
+
+    public TermEntity getTermById(int termId) {
+        return mDb.termDao().getById(termId);
+    }
+
+    public Long insertTerm(final TermEntity term) {
+        executor.submit(new Callable<Long>() {
+            public Long call() throws Exception {
+                return mDb.termDao().insert((term));
+            }
+        });
+
+//        executor.execute(new Runnable() {
+//            @Override
+//            public void run() {
+//                return mDb.termDao().insert(term);
+//            }
+//        });
     }
 }
