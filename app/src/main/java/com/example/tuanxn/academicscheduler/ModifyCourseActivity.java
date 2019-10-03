@@ -72,7 +72,7 @@ public class ModifyCourseActivity extends AppCompatActivity {
     private ModifyCourseViewModel mcViewModel;
     private static String courseStatus;
     private boolean mNewCourse;
-    private static int courseId;
+    private int courseId;
 
 
     @OnClick(R.id.addAssessmentButton)
@@ -120,7 +120,12 @@ public class ModifyCourseActivity extends AppCompatActivity {
             @Override
             public void onChanged(@Nullable List<AssessmentEntity> assessmentEntities) {
                 assessmentData.clear();
-                assessmentData.addAll(assessmentEntities);
+                for (AssessmentEntity assessmentEntity: assessmentEntities) {
+                    if (courseId == assessmentEntity.getCourseId()) {
+                        assessmentData.add(assessmentEntity);
+                    }
+                }
+//                assessmentData.addAll(assessmentEntities);
 
                 if (assessmentAdapter == null) {
                     assessmentAdapter = new AssessmentAdapter(assessmentData, ModifyCourseActivity.this);
@@ -135,7 +140,12 @@ public class ModifyCourseActivity extends AppCompatActivity {
             @Override
             public void onChanged(@Nullable List<NoteEntity> noteEntities) {
                 noteData.clear();
-                noteData.addAll(noteEntities);
+                for (NoteEntity noteEntity: noteEntities) {
+                    if (courseId == noteEntity.getCourseId()) {
+                        noteData.add(noteEntity);
+                    }
+                }
+//                noteData.addAll(noteEntities);
 
                 if (noteAdapter == null) {
                     noteAdapter = new NoteAdapter(noteData, ModifyCourseActivity.this);

@@ -50,6 +50,7 @@ public class ModifyTermActivity extends AppCompatActivity {
     private CourseAdapter courseAdapter;
     private ModifyTermViewModel mtViewModel;
     private boolean mNewTerm;
+    private int termId;
 
     @OnClick(R.id.addCourseButton)
     void fabClickHandler() {
@@ -85,7 +86,13 @@ public class ModifyTermActivity extends AppCompatActivity {
             @Override
             public void onChanged(@Nullable List<CourseEntity> courseEntities) {
                 courseData.clear();
-                courseData.addAll(courseEntities);
+                for(CourseEntity courseEntity: courseEntities) {
+                    if(termId == courseEntity.getTermId()) {
+                        courseData.add(courseEntity);
+                    }
+                }
+
+//                courseData.addAll(courseEntities);
 
                 if (courseAdapter == null) {
                     courseAdapter = new CourseAdapter(courseData, ModifyTermActivity.this);
@@ -114,7 +121,7 @@ public class ModifyTermActivity extends AppCompatActivity {
             mNewTerm = true;
         }else {
             setTitle("Edit term");
-            int termId = extras.getInt(TERM_ID_KEY);
+            termId = extras.getInt(TERM_ID_KEY);
             mtViewModel.loadData(termId);
         }
 
