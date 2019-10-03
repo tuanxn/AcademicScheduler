@@ -182,58 +182,36 @@
         app:layout_constraintStart_toEndOf="@+id/textView5"
         app:layout_constraintTop_toBottomOf="@+id/courseStatus" />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/editNote"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"
-        android:backgroundTint="@color/colorPrimaryDark"
-        app:fabSize="mini"
-        app:layout_constraintBottom_toTopOf="@+id/course_assessment_recycler_view"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/ic_edit" />
-
-    <TextView
-        android:id="@+id/noteText"
-        android:layout_width="0dp"
-        android:layout_height="39dp"
-        android:layout_margin="8dp"
-        android:layout_marginEnd="96dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="96dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:ellipsize="end"
-        android:hint="Click to add notes"
-        android:maxLines="2"
-        android:textColor="@color/list_text_color"
-        android:textSize="@dimen/list_text_size"
-        app:layout_constraintBottom_toTopOf="@+id/course_assessment_recycler_view"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.09"
-        app:layout_constraintStart_toEndOf="@+id/editNote"
-        app:layout_constraintTop_toBottomOf="@+id/courseMentorEmail"
-        app:layout_constraintVertical_bias="0.054" />
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/course_assessment_recycler_view"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_height="134dp"
+
         android:clickable="true"
         android:focusable="true"
         android:focusableInTouchMode="true"
         android:scrollbars="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/noteText" />
+        app:layout_constraintTop_toBottomOf="@+id/course_note_recycler_view"
+        app:layout_constraintVertical_bias="0.867" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/course_note_recycler_view"
+        android:layout_width="0dp"
+        android:layout_height="84dp"
+        android:layout_marginBottom="8dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:scrollbars="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/course_assessment_recycler_view"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/courseMentorEmail"
+        app:layout_constraintVertical_bias="0.0" />
 
 </android.support.constraint.ConstraintLayout>
