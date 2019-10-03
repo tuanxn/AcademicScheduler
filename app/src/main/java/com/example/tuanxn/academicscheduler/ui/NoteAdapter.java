@@ -43,7 +43,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         final NoteEntity note = mNotes.get(position);
-        holder.nTextView.setText(note.getText());
+        holder.nTextView.setText("Note: " + note.getText());
 
         holder.nFab.setOnClickListener(new View.OnClickListener() {
             @Override
