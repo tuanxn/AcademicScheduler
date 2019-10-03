@@ -5,6 +5,7 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -69,6 +70,10 @@ public class CourseActivity extends AppCompatActivity {
         courseRecyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         courseRecyclerView.setLayoutManager(layoutManager);
+
+        DividerItemDecoration divider = new DividerItemDecoration(
+                courseRecyclerView.getContext(), layoutManager.getOrientation());
+        courseRecyclerView.addItemDecoration(divider);
 
 
     }

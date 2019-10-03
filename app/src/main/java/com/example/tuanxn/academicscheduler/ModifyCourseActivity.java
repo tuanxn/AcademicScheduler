@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -199,8 +200,20 @@ public class ModifyCourseActivity extends AppCompatActivity {
         LinearLayoutManager layoutManager1 = new LinearLayoutManager(this);
         courseNoteRecyclerView.setLayoutManager(layoutManager1);
 
+        // TODO
+        assessmentAdapter = new AssessmentAdapter(assessmentData, this);
+        courseAssessmentRecyclerView.setAdapter(assessmentAdapter);
+
         noteAdapter = new NoteAdapter(noteData, this);
         courseNoteRecyclerView.setAdapter(noteAdapter);
+
+        DividerItemDecoration divider = new DividerItemDecoration(
+                courseNoteRecyclerView.getContext(), layoutManager.getOrientation());
+        courseNoteRecyclerView.addItemDecoration(divider);
+
+        DividerItemDecoration divider1 = new DividerItemDecoration(
+                courseAssessmentRecyclerView.getContext(), layoutManager.getOrientation());
+        courseAssessmentRecyclerView.addItemDecoration(divider1);
 
     }
 
