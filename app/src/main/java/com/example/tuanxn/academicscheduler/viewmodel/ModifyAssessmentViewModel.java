@@ -53,4 +53,8 @@ public class ModifyAssessmentViewModel extends AndroidViewModel {
         }
         mRepository.insertAssessment(assessment);
     }
+
+    public void deleteAssessment() {
+        mRepository.deleteAssessment(mLiveAssessment.getValue());
+    }
 }

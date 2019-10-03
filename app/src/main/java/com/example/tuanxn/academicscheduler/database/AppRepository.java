@@ -140,4 +140,40 @@ public class AppRepository {
     public NoteEntity getNoteById(int noteId) {
         return mDb.noteDao().getById(noteId);
     }
+
+    public void deleteNote(final NoteEntity note) {
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                mDb.noteDao().delete(note);
+            }
+        });
+    }
+
+    public void deleteAssessment(final AssessmentEntity assessment) {
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                mDb.assessmentDao().delete(assessment);
+            }
+        });
+    }
+
+    public void deleteCourse(final CourseEntity course) {
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                mDb.courseDao().delete(course);
+            }
+        });
+    }
+
+    public void deleteTerm(final TermEntity term) {
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                mDb.termDao().delete(term);
+            }
+        });
+    }
 }

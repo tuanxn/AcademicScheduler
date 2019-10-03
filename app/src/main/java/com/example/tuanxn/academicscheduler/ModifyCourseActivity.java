@@ -227,9 +227,12 @@ public class ModifyCourseActivity extends AppCompatActivity {
             }
             return true;
         }else if(id == R.id.action_add_note) {
-                addNoteClickHandler();
-                return true;
-            }
+            addNoteClickHandler();
+            return true;
+        }else if(id == R.id.action_delete_course) {
+            mcViewModel.deleteCourse();
+            finish();
+        }
         return super.onOptionsItemSelected(item);
     }
 

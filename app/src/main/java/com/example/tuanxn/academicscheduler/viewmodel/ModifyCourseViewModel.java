@@ -65,4 +65,8 @@ public class ModifyCourseViewModel extends AndroidViewModel {
         }
         mRepository.insertCourse(course);
     }
+
+    public void deleteCourse() {
+        mRepository.deleteCourse(mLiveCourse.getValue());
+    }
 }

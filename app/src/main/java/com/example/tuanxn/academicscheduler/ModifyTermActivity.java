@@ -136,6 +136,9 @@ public class ModifyTermActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
             return true;
+        }else if(item.getItemId() == R.id.action_delete_term) {
+            mtViewModel.deleteTerm();
+            finish();
         }
         return super.onOptionsItemSelected(item);
     }

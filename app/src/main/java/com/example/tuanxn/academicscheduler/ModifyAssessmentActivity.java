@@ -116,6 +116,9 @@ public class ModifyAssessmentActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
             return true;
+        }else if(item.getItemId() == R.id.action_delete_assessment) {
+            maViewModel.deleteAssessment();
+            finish();
         }
         return super.onOptionsItemSelected(item);
     }

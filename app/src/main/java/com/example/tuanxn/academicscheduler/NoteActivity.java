@@ -88,9 +88,12 @@ public class NoteActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == android.R.id.home) {
+        if (item.getItemId() == android.R.id.home) {
             saveAndReturn();
             return true;
+        } else if (item.getItemId() == R.id.action_delete_note) {
+            nViewModel.deleteNote();
+            finish();
         }
         return super.onOptionsItemSelected(item);
     }
