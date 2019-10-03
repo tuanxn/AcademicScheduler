@@ -10,11 +10,13 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.tuanxn.academicscheduler.database.AppRepository;
 import com.example.tuanxn.academicscheduler.database.CourseEntity;
@@ -54,15 +56,33 @@ public class ModifyTermActivity extends AppCompatActivity {
 
     @OnClick(R.id.addCourseButton)
     void fabClickHandler() {
-
-        try {
-            saveAndReturn();
-        } catch (ParseException e) {
-            e.printStackTrace();
+        boolean validated = true;
+        String errorMessage = "";
+        if (TextUtils.isEmpty(title.getText().toString().trim())) {
+            errorMessage += "Missing term title\n";
+            validated = false;
         }
-        Log.i("test", "TermId: " + Integer.toString(AppRepository.createdTermId));
-            Intent intent = new Intent(this, ModifyCourseActivity.class);
-            startActivity(intent);
+        if (TextUtils.isEmpty(termStart.getText().toString().trim())) {
+            errorMessage += "Missing term start\n";
+            validated = false;
+        }
+        if (TextUtils.isEmpty(termEnd.getText().toString().trim())) {
+            errorMessage += "Missing term end\n";
+            validated = false;
+        }
+        if (validated) {
+            try {
+                saveAndReturn();
+                Log.i("test", "TermId: " + Integer.toString(AppRepository.createdTermId));
+                Intent intent = new Intent(this, ModifyCourseActivity.class);
+                startActivity(intent);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+        }else {
+            Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -138,15 +158,39 @@ public class ModifyTermActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == android.R.id.home) {
-            try {
-                saveAndReturn();
-            } catch (ParseException e) {
-                e.printStackTrace();
+            boolean validated = true;
+            String errorMessage = "";
+            if (TextUtils.isEmpty(title.getText().toString().trim())) {
+                errorMessage += "Missing term title\n";
+                validated = false;
             }
-            return true;
+            if (TextUtils.isEmpty(termStart.getText().toString().trim())) {
+                errorMessage += "Missing term start\n";
+                validated = false;
+            }
+            if (TextUtils.isEmpty(termEnd.getText().toString().trim())) {
+                errorMessage += "Missing term end\n";
+                validated = false;
+            }
+            if (validated) {
+                try {
+                    saveAndReturn();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                return true;
+            }else {
+                Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show();
+                return true;
+            }
         }else if(item.getItemId() == R.id.action_delete_term) {
-            mtViewModel.deleteTerm();
-            finish();
+            if (courseData.size() > 0) {
+                Toast.makeText(this, "You cannot delete a term with courses assigned to it", Toast.LENGTH_SHORT).show();
+                return true;
+            }else {
+                mtViewModel.deleteTerm();
+                finish();
+            }
         }
         return super.onOptionsItemSelected(item);
     }
