@@ -2,12 +2,14 @@ package com.example.tuanxn.academicscheduler.utilities;
 
 import com.example.tuanxn.academicscheduler.database.AssessmentEntity;
 import com.example.tuanxn.academicscheduler.database.CourseEntity;
+import com.example.tuanxn.academicscheduler.database.NoteEntity;
 import com.example.tuanxn.academicscheduler.database.TermEntity;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.Executors;
 
 public class SampleData {
 
@@ -29,10 +31,10 @@ public class SampleData {
 
     public static List<CourseEntity> getCourses() throws Exception {
         List<CourseEntity> courses = new ArrayList<>();
-        courses.add(new CourseEntity(2001, 1001, "MATH", getDate("10/05/2019"), getDate("10/20/2019"), "Completed", "John", "550-5555", "john@gmail.com", "Math Notes"));
-        courses.add(new CourseEntity(2002, 1002, "SCIENCE", getDate("10/21/2019"), getDate("10/25/2019"), "In Progress", "Steve", "551-5555", "steve@gmail.com", "Science Notes"));
-        courses.add(new CourseEntity(2003, 1002, "PHYSICS", getDate("10/26/2019"), getDate("10/31/2019"), "In Progress", "Joseph", "552-5555", "joseph@gmail.com", "Physics Notes"));
-        courses.add(new CourseEntity(2004, 1003, "ENGLISH", getDate("11/05/2019"), getDate("11/10/2019"), "Plan to Take", "Jerry", "553-5555", "jerry@gmail.com", "English Notes"));
+        courses.add(new CourseEntity(2001, 1001, "MATH", getDate("10/05/2019"), getDate("10/20/2019"), "Completed", "John", "550-5555", "john@gmail.com"));
+        courses.add(new CourseEntity(2002, 1002, "SCIENCE", getDate("10/21/2019"), getDate("10/25/2019"), "In Progress", "Steve", "551-5555", "steve@gmail.com"));
+        courses.add(new CourseEntity(2003, 1002, "PHYSICS", getDate("10/26/2019"), getDate("10/31/2019"), "In Progress", "Joseph", "552-5555", "joseph@gmail.com"));
+        courses.add(new CourseEntity(2004, 1003, "ENGLISH", getDate("11/05/2019"), getDate("11/10/2019"), "Plan to Take", "Jerry", "553-5555", "jerry@gmail.com"));
         return courses;
     }
 
@@ -44,5 +46,14 @@ public class SampleData {
         assessments.add(new AssessmentEntity(3004, 2003, "PHYSICS LAB", "Performance Assessment", getDate("10/27/2019"), getDate("10/30/2019")));
         assessments.add(new AssessmentEntity(3005, 2004, "ESSAY", "Performance Assessment", getDate("11/07/2019"), getDate("11/10/2019")));
         return assessments;
+    }
+
+    public static List<NoteEntity> getNotes() {
+        List<NoteEntity> notes = new ArrayList<>();
+        notes.add(new NoteEntity(4001, 2001, "Math is hard"));
+        notes.add(new NoteEntity(4002, 2002, "Science is very hard"));
+        notes.add(new NoteEntity(4003, 2003, "Physics is very very hard"));
+        notes.add(new NoteEntity(4004, 2004, "English is easy"));
+        return notes;
     }
 }

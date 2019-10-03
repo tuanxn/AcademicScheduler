@@ -11,6 +11,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -21,7 +23,9 @@ import android.widget.Toast;
 import com.example.tuanxn.academicscheduler.database.AppRepository;
 import com.example.tuanxn.academicscheduler.database.AssessmentEntity;
 import com.example.tuanxn.academicscheduler.database.CourseEntity;
+import com.example.tuanxn.academicscheduler.database.NoteEntity;
 import com.example.tuanxn.academicscheduler.ui.AssessmentAdapter;
+import com.example.tuanxn.academicscheduler.ui.NoteAdapter;
 import com.example.tuanxn.academicscheduler.utilities.DateConverter;
 import com.example.tuanxn.academicscheduler.utilities.SampleData;
 import com.example.tuanxn.academicscheduler.viewmodel.ModifyCourseViewModel;
@@ -38,6 +42,9 @@ import butterknife.OnClick;
 import static com.example.tuanxn.academicscheduler.utilities.Constants.COURSE_ID_KEY;
 
 public class ModifyCourseActivity extends AppCompatActivity {
+
+    @BindView(R.id.course_note_recycler_view)
+    RecyclerView courseNoteRecyclerView;
 
     @BindView(R.id.course_assessment_recycler_view)
     RecyclerView courseAssessmentRecyclerView;
@@ -56,10 +63,10 @@ public class ModifyCourseActivity extends AppCompatActivity {
     TextView courseMentorPhone;
     @BindView(R.id.courseMentorEmail)
     TextView courseMentorEmail;
-    @BindView(R.id.noteText)
-    TextView noteText;
 
+    private List<NoteEntity> noteData = new ArrayList<>();
     private List<AssessmentEntity> assessmentData = new ArrayList<>();
+    private NoteAdapter noteAdapter;
     private AssessmentAdapter assessmentAdapter;
     private ModifyCourseViewModel mcViewModel;
     private static String courseStatus;
@@ -76,14 +83,6 @@ public class ModifyCourseActivity extends AppCompatActivity {
         }
         Log.i("test", "CourseId: " + Integer.toString(AppRepository.createdCourseId));
         Intent intent = new Intent(this, ModifyAssessmentActivity.class);
-        startActivity(intent);
-    }
-
-    @OnClick(R.id.editNote)
-    void editClickHandler() {
-        Intent intent = new Intent(this, NoteActivity.class);
-        intent.putExtra(COURSE_ID_KEY, courseId);
-        intent.putExtra("NOTE", noteText.getText().toString());
         startActivity(intent);
     }
 
@@ -114,6 +113,12 @@ public class ModifyCourseActivity extends AppCompatActivity {
 
     }
 
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_addnote, menu);
+        return true;
+    }
+
     private void initViewModel() {
 
         final Observer<List<AssessmentEntity>> assessmentsObserver = new Observer<List<AssessmentEntity>>() {
@@ -131,8 +136,27 @@ public class ModifyCourseActivity extends AppCompatActivity {
             }
         };
 
+        final Observer<List<NoteEntity>> notesObserver = new Observer<List<NoteEntity>>() {
+            @Override
+            public void onChanged(@Nullable List<NoteEntity> noteEntities) {
+                noteData.clear();
+                noteData.addAll(noteEntities);
+
+                if (noteAdapter == null) {
+                    noteAdapter = new NoteAdapter(noteData, ModifyCourseActivity.this);
+                    courseNoteRecyclerView.setAdapter(noteAdapter);
+                }else {
+                    noteAdapter.notifyDataSetChanged();
+                }
+            }
+        };
+
         mcViewModel = ViewModelProviders.of(this).get(ModifyCourseViewModel.class);
+
         mcViewModel.mcAssessments.observe(this, assessmentsObserver);
+
+        mcViewModel.mcNotes.observe(this, notesObserver);
+
         mcViewModel.mLiveCourse.observe(this, new Observer<CourseEntity>() {
             @Override
             public void onChanged(@Nullable CourseEntity courseEntity) {
@@ -158,7 +182,6 @@ public class ModifyCourseActivity extends AppCompatActivity {
                 courseMentorName.setText(courseEntity.getMentorName());
                 courseMentorPhone.setText(courseEntity.getMentorPhone());
                 courseMentorEmail.setText(courseEntity.getMentorEmail());
-                noteText.setText(courseEntity.getNotes());
             }
         });
 
@@ -177,25 +200,50 @@ public class ModifyCourseActivity extends AppCompatActivity {
         courseAssessmentRecyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         courseAssessmentRecyclerView.setLayoutManager(layoutManager);
+
+        courseNoteRecyclerView.setHasFixedSize(true);
+        LinearLayoutManager layoutManager1 = new LinearLayoutManager(this);
+        courseNoteRecyclerView.setLayoutManager(layoutManager1);
+
+        noteAdapter = new NoteAdapter(noteData, this);
+        courseNoteRecyclerView.setAdapter(noteAdapter);
+
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == android.R.id.home) {
+
+        int id = item.getItemId();
+
+        if(id == android.R.id.home) {
             try {
                 saveAndReturn();
             } catch (ParseException e) {
                 e.printStackTrace();
             }
             return true;
-        }
+        }else if(id == R.id.action_add_note) {
+                addNoteClickHandler();
+                return true;
+            }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void addNoteClickHandler() {
+        try {
+            saveAndReturn();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Log.i("test", "CourseId: " + Integer.toString(AppRepository.createdCourseId));
+        Intent intent = new Intent(this, NoteActivity.class);
+        startActivity(intent);
     }
 
     private void saveAndReturn() throws ParseException {
         mcViewModel.saveCourse(title.getText().toString(), courseStart.getText().toString(), courseEnd.getText().toString(),
                 dropdown.getSelectedItem().toString(), courseMentorName.getText().toString(), courseMentorPhone.getText().toString(),
-                courseMentorEmail.getText().toString(), noteText.getText().toString());
+                courseMentorEmail.getText().toString());
         finish();
     }
 }

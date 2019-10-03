@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import com.example.tuanxn.academicscheduler.database.AppRepository;
 import com.example.tuanxn.academicscheduler.database.AssessmentEntity;
 import com.example.tuanxn.academicscheduler.database.CourseEntity;
+import com.example.tuanxn.academicscheduler.database.NoteEntity;
 import com.example.tuanxn.academicscheduler.utilities.DateConverter;
 import com.example.tuanxn.academicscheduler.utilities.SampleData;
 
@@ -24,6 +25,7 @@ public class ModifyCourseViewModel extends AndroidViewModel {
 
     public MutableLiveData<CourseEntity> mLiveCourse = new MutableLiveData<>();
     public LiveData<List<AssessmentEntity>> mcAssessments;
+    public LiveData<List<NoteEntity>> mcNotes;
     private AppRepository mRepository;
     private Executor executor = Executors.newSingleThreadExecutor();
 
@@ -32,6 +34,7 @@ public class ModifyCourseViewModel extends AndroidViewModel {
 
         mRepository = AppRepository.getInstance(getApplication().getApplicationContext());
         mcAssessments = mRepository.mcAssessments;
+        mcNotes = mRepository.mcNotes;
     }
 
     public void loadData(final int courseId) {
@@ -44,13 +47,13 @@ public class ModifyCourseViewModel extends AndroidViewModel {
         });
     }
 
-    public void saveCourse(String title, String courseStart, String courseEnd, String status, String mentorName, String mentorPhone, String mentorEmail, String notes) throws ParseException {
+    public void saveCourse(String title, String courseStart, String courseEnd, String status, String mentorName, String mentorPhone, String mentorEmail) throws ParseException {
         CourseEntity course = mLiveCourse.getValue();
         if (course == null) {
             if(TextUtils.isEmpty(title.trim()) || TextUtils.isEmpty(courseStart.trim()) || TextUtils.isEmpty(courseEnd.trim()) || TextUtils.isEmpty(mentorName.trim()) || TextUtils.isEmpty(mentorPhone.trim()) || TextUtils.isEmpty(mentorEmail.trim())) {
                 return;
             }
-            course = new CourseEntity(AppRepository.createdTermId, title, DateConverter.stringToDate(courseStart), DateConverter.stringToDate(courseEnd), status, mentorName, mentorPhone, mentorEmail, notes);
+            course = new CourseEntity(AppRepository.createdTermId, title, DateConverter.stringToDate(courseStart), DateConverter.stringToDate(courseEnd), status, mentorName, mentorPhone, mentorEmail);
         }else {
             course.setTitle(title);
             course.setStartDate(DateConverter.stringToDate(courseStart));

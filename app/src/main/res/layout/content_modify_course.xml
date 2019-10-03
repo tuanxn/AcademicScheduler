@@ -185,8 +185,7 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/course_assessment_recycler_view"
         android:layout_width="0dp"
-        android:layout_height="134dp"
-
+        android:layout_height="0dp"
         android:clickable="true"
         android:focusable="true"
         android:focusableInTouchMode="true"
@@ -201,7 +200,7 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/course_note_recycler_view"
         android:layout_width="0dp"
-        android:layout_height="84dp"
+        android:layout_height="0dp"
         android:layout_marginBottom="8dp"
         android:clickable="true"
         android:focusable="true"

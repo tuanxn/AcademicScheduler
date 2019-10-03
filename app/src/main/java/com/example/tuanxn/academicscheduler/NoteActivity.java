@@ -14,10 +14,13 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.tuanxn.academicscheduler.database.CourseEntity;
+import com.example.tuanxn.academicscheduler.database.NoteEntity;
 import com.example.tuanxn.academicscheduler.viewmodel.NoteViewModel;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.example.tuanxn.academicscheduler.utilities.Constants.NOTE_ID_KEY;
 
 public class NoteActivity extends AppCompatActivity {
 
@@ -31,7 +34,7 @@ public class NoteActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_check);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -54,10 +57,10 @@ public class NoteActivity extends AppCompatActivity {
     private void initViewModel() {
         nViewModel = ViewModelProviders.of(this).get(NoteViewModel.class);
 
-        nViewModel.mLiveCourse.observe(this, new Observer<CourseEntity>() {
+        nViewModel.mLiveNote.observe(this, new Observer<NoteEntity>() {
             @Override
-            public void onChanged(@Nullable CourseEntity courseEntity) {
-                nTextView.setText(courseEntity.getNotes());
+            public void onChanged(@Nullable NoteEntity noteEntity) {
+                nTextView.setText(noteEntity != null ? noteEntity.getText() : null);
             }
         });
 
@@ -67,8 +70,8 @@ public class NoteActivity extends AppCompatActivity {
             mNewNote = true;
         }else {
             setTitle("Edit note");
-            String noteText = extras.getString("NOTE");
-            nTextView.setText(noteText);
+            int noteId = extras.getInt(NOTE_ID_KEY);
+            nViewModel.loadData(noteId);
         }
     }
 

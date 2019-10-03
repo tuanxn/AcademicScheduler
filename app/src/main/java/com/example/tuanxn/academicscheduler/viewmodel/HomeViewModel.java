@@ -20,6 +20,6 @@ public class HomeViewModel extends AndroidViewModel {
     }
 
     public void deleteAllData() {
-        mRepository.deleteAllDate();
+        mRepository.deleteAllData();
     }
 }

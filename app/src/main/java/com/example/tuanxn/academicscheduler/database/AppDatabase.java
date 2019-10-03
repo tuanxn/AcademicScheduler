@@ -8,16 +8,17 @@ import android.content.Context;
 
 import com.example.tuanxn.academicscheduler.utilities.DateConverter;
 
-@Database(entities = {TermEntity.class, CourseEntity.class, AssessmentEntity.class}, version = 1)
+@Database(entities = {TermEntity.class, CourseEntity.class, AssessmentEntity.class, NoteEntity.class}, version = 2)
 @TypeConverters(DateConverter.class)
 public abstract class AppDatabase extends RoomDatabase {
-    public static final String DATABASE_NAME = "AppDatabase.db";
+    public static final String DATABASE_NAME = "AppDatabase2.db";
     private static volatile AppDatabase instance;
     private static final Object LOCK = new Object();
 
     public abstract TermDao termDao();
     public abstract CourseDao courseDao();
     public abstract AssessmentDao assessmentDao();
+    public abstract NoteDao noteDao();
 
     public static AppDatabase getInstance(Context context) {
         if (instance == null) {

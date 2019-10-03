@@ -2,6 +2,7 @@ package com.example.tuanxn.academicscheduler.database;
 
 import android.arch.lifecycle.LiveData;
 import android.content.Context;
+import android.support.v4.util.SimpleArrayMap;
 import android.util.Log;
 
 import com.example.tuanxn.academicscheduler.utilities.SampleData;
@@ -22,6 +23,7 @@ public class AppRepository {
     public LiveData<List<AssessmentEntity>> mAssessments;
     public LiveData<List<CourseEntity>> mtCourses;
     public LiveData<List<AssessmentEntity>> mcAssessments;
+    public LiveData<List<NoteEntity>> mcNotes;
     private AppDatabase mDb;
     private Executor executor = Executors.newSingleThreadExecutor();
 
@@ -39,6 +41,7 @@ public class AppRepository {
         mAssessments = getAllAssessments();
         mtCourses = getAllCourses();
         mcAssessments = getAllAssessments();
+        mcNotes = getAllNotes();
     }
 
     public void addSampleData() {
@@ -49,6 +52,7 @@ public class AppRepository {
                     mDb.termDao().insertAll(SampleData.getTerms());
                     mDb.courseDao().insertAll(SampleData.getCourses());
                     mDb.assessmentDao().insertAll(SampleData.getAssessments());
+                    mDb.noteDao().insertAll(SampleData.getNotes());
                 }catch (Exception e) {
 
                 }
@@ -68,13 +72,18 @@ public class AppRepository {
         return mDb.assessmentDao().getAll();
     }
 
-    public void deleteAllDate() {
+    private LiveData<List<NoteEntity>> getAllNotes() {
+        return mDb.noteDao().getAll();
+    }
+
+    public void deleteAllData() {
         executor.execute(new Runnable() {
             @Override
             public void run() {
                 mDb.termDao().deleteAll();
                 mDb.courseDao().deleteAll();
                 mDb.assessmentDao().deleteAll();
+                mDb.noteDao().deleteAll();
             }
         });
     }
@@ -119,12 +128,16 @@ public class AppRepository {
         });
     }
 
-    public void insertNote(final CourseEntity note) {
+    public void insertNote(final NoteEntity note) {
         executor.execute(new Runnable() {
             @Override
             public void run() {
-                mDb.courseDao().insert(note);
+                mDb.noteDao().insert(note);
             }
         });
+    }
+
+    public NoteEntity getNoteById(int noteId) {
+        return mDb.noteDao().getById(noteId);
     }
 }

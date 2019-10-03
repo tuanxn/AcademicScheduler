@@ -19,7 +19,8 @@ public class CourseEntity {
     private String mentorName;
     private String mentorPhone;
     private String mentorEmail;
-    private String notes;
+    @Ignore
+    private List<NoteEntity> courseNotes;
     @Ignore
     private List<AssessmentEntity> courseAssessments;
 
@@ -30,7 +31,7 @@ public class CourseEntity {
 
     // Used to update an existing course
     @Ignore
-    public CourseEntity(int id, int termId, String title, Date startDate, Date endDate, String status, String mentorName, String mentorPhone, String mentorEmail, String notes, List<AssessmentEntity> courseAssessments) {
+    public CourseEntity(int id, int termId, String title, Date startDate, Date endDate, String status, String mentorName, String mentorPhone, String mentorEmail, List<NoteEntity> courseNotes, List<AssessmentEntity> courseAssessments) {
         this.id = id;
         this.termId = termId;
         this.title = title;
@@ -40,13 +41,13 @@ public class CourseEntity {
         this.mentorName = mentorName;
         this.mentorPhone = mentorPhone;
         this.mentorEmail = mentorEmail;
-        this.notes = notes;
+        this.courseNotes = courseNotes;
         this.courseAssessments = courseAssessments;
     }
 
     // Create a new course with auto-incrementing
     @Ignore
-    public CourseEntity(int termId, String title, Date startDate, Date endDate, String status, String mentorName, String mentorPhone, String mentorEmail, String notes, List<AssessmentEntity> courseAssessments) {
+    public CourseEntity(int termId, String title, Date startDate, Date endDate, String status, String mentorName, String mentorPhone, String mentorEmail, List<NoteEntity> courseNotes, List<AssessmentEntity> courseAssessments) {
 
         this.termId = termId;
         this.title = title;
@@ -56,13 +57,13 @@ public class CourseEntity {
         this.mentorName = mentorName;
         this.mentorPhone = mentorPhone;
         this.mentorEmail = mentorEmail;
-        this.notes = notes;
+        this.courseNotes = courseNotes;
         this.courseAssessments = courseAssessments;
     }
 
     // Create a new course with auto-incrementing
     @Ignore
-    public CourseEntity(int termId, String title, Date startDate, Date endDate, String status, String mentorName, String mentorPhone, String mentorEmail, String notes) {
+    public CourseEntity(int termId, String title, Date startDate, Date endDate, String status, String mentorName, String mentorPhone, String mentorEmail) {
 
         this.termId = termId;
         this.title = title;
@@ -72,11 +73,10 @@ public class CourseEntity {
         this.mentorName = mentorName;
         this.mentorPhone = mentorPhone;
         this.mentorEmail = mentorEmail;
-        this.notes = notes;
     }
 
     // For sample data
-    public CourseEntity(int id, int termId, String title, Date startDate, Date endDate, String status, String mentorName, String mentorPhone, String mentorEmail, String notes) {
+    public CourseEntity(int id, int termId, String title, Date startDate, Date endDate, String status, String mentorName, String mentorPhone, String mentorEmail) {
 
         this.id = id;
         this.termId = termId;
@@ -87,7 +87,6 @@ public class CourseEntity {
         this.mentorName = mentorName;
         this.mentorPhone = mentorPhone;
         this.mentorEmail = mentorEmail;
-        this.notes = notes;
     }
 
     public int getId() {
@@ -162,20 +161,20 @@ public class CourseEntity {
         this.mentorEmail = mentorEmail;
     }
 
-    public String getNotes() {
-        return notes;
-    }
-
-    public void setNotes(String notes) {
-        this.notes = notes;
-    }
-
     public List<AssessmentEntity> getCourseAssessments() {
         return courseAssessments;
     }
 
     public void setCourseAssessments(List<AssessmentEntity> courseAssessments) {
         this.courseAssessments = courseAssessments;
+    }
+
+    public List<NoteEntity> getCourseNotes() {
+        return courseNotes;
+    }
+
+    public void setCourseNotes(List<NoteEntity> courseNotes) {
+        this.courseNotes = courseNotes;
     }
 
     @Override
@@ -190,7 +189,7 @@ public class CourseEntity {
                 ", mentorName='" + mentorName + '\'' +
                 ", mentorPhone='" + mentorPhone + '\'' +
                 ", mentorEmail='" + mentorEmail + '\'' +
-                ", notes='" + notes + '\'' +
+                ", courseNotes=" + courseNotes +
                 ", courseAssessments=" + courseAssessments +
                 '}';
     }
