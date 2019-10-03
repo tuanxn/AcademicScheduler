@@ -113,12 +113,6 @@ public class ModifyCourseActivity extends AppCompatActivity {
 
     }
 
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_addnote, menu);
-        return true;
-    }
-
     private void initViewModel() {
 
         final Observer<List<AssessmentEntity>> assessmentsObserver = new Observer<List<AssessmentEntity>>() {
@@ -208,6 +202,16 @@ public class ModifyCourseActivity extends AppCompatActivity {
         noteAdapter = new NoteAdapter(noteData, this);
         courseNoteRecyclerView.setAdapter(noteAdapter);
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_addnote, menu);
+        if (!mNewCourse) {
+            inflater.inflate(R.menu.menu_delete_course, menu);
+        }
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override

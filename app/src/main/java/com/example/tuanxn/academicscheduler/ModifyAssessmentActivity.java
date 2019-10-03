@@ -9,6 +9,8 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -94,6 +96,15 @@ public class ModifyAssessmentActivity extends AppCompatActivity {
             maViewModel.loadData(assessmentId);
         }
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        if (!mNewAssessment) {
+            MenuInflater inflater = getMenuInflater();
+            inflater.inflate(R.menu.menu_delete_assessment, menu);
+        }
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override

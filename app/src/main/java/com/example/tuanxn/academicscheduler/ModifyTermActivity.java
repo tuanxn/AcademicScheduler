@@ -10,6 +10,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.TextView;
 
@@ -115,6 +117,14 @@ public class ModifyTermActivity extends AppCompatActivity {
             mtViewModel.loadData(termId);
         }
 
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        if (!mNewTerm) {
+            MenuInflater inflater = getMenuInflater();
+            inflater.inflate(R.menu.menu_delete_term, menu);
+        }
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
