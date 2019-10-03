@@ -56,9 +56,8 @@ public class ModifyTermActivity extends AppCompatActivity {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        Log.i("test", "TermId: " + Long.toString(AppRepository.createdTermId));
+        Log.i("test", "TermId: " + Integer.toString(AppRepository.createdTermId));
             Intent intent = new Intent(this, ModifyCourseActivity.class);
-            intent.putExtra(TERM_ID_KEY, AppRepository.createdTermId);
             startActivity(intent);
     }
 

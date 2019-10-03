@@ -15,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.tuanxn.academicscheduler.database.AppRepository;
 import com.example.tuanxn.academicscheduler.database.AssessmentEntity;
 import com.example.tuanxn.academicscheduler.viewmodel.ModifyAssessmentViewModel;
 
@@ -109,7 +110,8 @@ public class ModifyAssessmentActivity extends AppCompatActivity {
     }
 
     private void saveAndReturn() throws ParseException {
-        maViewModel.saveAssessment(aTitle.getText().toString(), aStart.getText().toString(), aEnd.getText().toString(), dropdown.getSelectedItem().toString());
+        maViewModel.saveAssessment(aTitle.getText().toString(), aStart.getText().toString(),
+                aEnd.getText().toString(), dropdown.getSelectedItem().toString());
         finish();
     }
 }

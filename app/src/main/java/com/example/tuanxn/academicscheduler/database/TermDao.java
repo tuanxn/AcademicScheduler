@@ -24,7 +24,7 @@ public interface TermDao {
     @Query("SELECT * FROM terms WHERE id=:id")
     TermEntity getById(int id);
 
-    @Query("SELECT * FROM terms ORDER BY endDate DESC")
+    @Query("SELECT * FROM terms ORDER BY endDate ASC")
     LiveData<List<TermEntity>> getAll();
 
     @Query("DELETE FROM terms")

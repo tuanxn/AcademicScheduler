@@ -44,8 +44,7 @@ public class ModifyAssessmentViewModel extends AndroidViewModel {
             if(TextUtils.isEmpty(title.trim()) || TextUtils.isEmpty(startDate) || TextUtils.isEmpty(endDate)) {
                 return;
             }
-            // TODO
-//            assessment = new AssessmentEntity(title, DateConverter.stringToDate(startDate), DateConverter.stringToDate(endDate), type);
+            assessment = new AssessmentEntity(AppRepository.createdCourseId, title, type, DateConverter.stringToDate(startDate), DateConverter.stringToDate(endDate));
         }else {
             assessment.setTitle(title);
             assessment.setStartDate(DateConverter.stringToDate(startDate));

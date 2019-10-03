@@ -24,7 +24,7 @@ public interface AssessmentDao {
     @Query("SELECT * FROM assessments WHERE id=:id")
     AssessmentEntity getById(int id);
 
-    @Query("SELECT * FROM assessments ORDER BY endDate DESC")
+    @Query("SELECT * FROM assessments ORDER BY endDate ASC")
     LiveData<List<AssessmentEntity>> getAll();
 
     @Query("DELETE FROM assessments")

@@ -8,6 +8,8 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -23,6 +25,7 @@ public class NoteActivity extends AppCompatActivity {
     TextView nTextView;
 
     private NoteViewModel nViewModel;
+    private boolean mNewNote;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +33,8 @@ public class NoteActivity extends AppCompatActivity {
         setContentView(R.layout.activity_note);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_check);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         ButterKnife.bind(this);
 
@@ -43,7 +48,7 @@ public class NoteActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
     }
 
     private void initViewModel() {
@@ -55,5 +60,29 @@ public class NoteActivity extends AppCompatActivity {
                 nTextView.setText(courseEntity.getNotes());
             }
         });
+
+        Bundle extras = getIntent().getExtras();
+        if (extras == null) {
+            setTitle("New note");
+            mNewNote = true;
+        }else {
+            setTitle("Edit note");
+            String noteText = extras.getString("NOTE");
+            nTextView.setText(noteText);
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == android.R.id.home) {
+            saveAndReturn();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void saveAndReturn() {
+        nViewModel.saveNote(nTextView.getText().toString());
+        finish();
     }
 }

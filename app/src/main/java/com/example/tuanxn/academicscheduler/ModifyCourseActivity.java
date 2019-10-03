@@ -5,16 +5,20 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.tuanxn.academicscheduler.database.AppRepository;
 import com.example.tuanxn.academicscheduler.database.AssessmentEntity;
 import com.example.tuanxn.academicscheduler.database.CourseEntity;
 import com.example.tuanxn.academicscheduler.ui.AssessmentAdapter;
@@ -23,6 +27,7 @@ import com.example.tuanxn.academicscheduler.utilities.SampleData;
 import com.example.tuanxn.academicscheduler.viewmodel.ModifyCourseViewModel;
 
 import java.sql.Date;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,16 +56,25 @@ public class ModifyCourseActivity extends AppCompatActivity {
     TextView courseMentorPhone;
     @BindView(R.id.courseMentorEmail)
     TextView courseMentorEmail;
+    @BindView(R.id.noteText)
+    TextView noteText;
 
     private List<AssessmentEntity> assessmentData = new ArrayList<>();
     private AssessmentAdapter assessmentAdapter;
     private ModifyCourseViewModel mcViewModel;
     private static String courseStatus;
     private boolean mNewCourse;
+    private static int courseId;
 
 
     @OnClick(R.id.addAssessmentButton)
     void fabClickHandler() {
+        try {
+            saveAndReturn();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Log.i("test", "CourseId: " + Integer.toString(AppRepository.createdCourseId));
         Intent intent = new Intent(this, ModifyAssessmentActivity.class);
         startActivity(intent);
     }
@@ -68,6 +82,8 @@ public class ModifyCourseActivity extends AppCompatActivity {
     @OnClick(R.id.editNote)
     void editClickHandler() {
         Intent intent = new Intent(this, NoteActivity.class);
+        intent.putExtra(COURSE_ID_KEY, courseId);
+        intent.putExtra("NOTE", noteText.getText().toString());
         startActivity(intent);
     }
 
@@ -77,6 +93,8 @@ public class ModifyCourseActivity extends AppCompatActivity {
         setContentView(R.layout.activity_modify_course);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_check);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         ButterKnife.bind(this);
         initRecyclerView();
@@ -94,7 +112,6 @@ public class ModifyCourseActivity extends AppCompatActivity {
         //set the spinners adapter to the previously created one.
         dropdown.setAdapter(adapter);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     private void initViewModel() {
@@ -141,7 +158,7 @@ public class ModifyCourseActivity extends AppCompatActivity {
                 courseMentorName.setText(courseEntity.getMentorName());
                 courseMentorPhone.setText(courseEntity.getMentorPhone());
                 courseMentorEmail.setText(courseEntity.getMentorEmail());
-
+                noteText.setText(courseEntity.getNotes());
             }
         });
 
@@ -151,7 +168,7 @@ public class ModifyCourseActivity extends AppCompatActivity {
             mNewCourse = true;
         }else {
             setTitle("Edit course");
-            int courseId = extras.getInt(COURSE_ID_KEY);
+            courseId = extras.getInt(COURSE_ID_KEY);
             mcViewModel.loadData(courseId);
         }
     }
@@ -162,4 +179,23 @@ public class ModifyCourseActivity extends AppCompatActivity {
         courseAssessmentRecyclerView.setLayoutManager(layoutManager);
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == android.R.id.home) {
+            try {
+                saveAndReturn();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void saveAndReturn() throws ParseException {
+        mcViewModel.saveCourse(title.getText().toString(), courseStart.getText().toString(), courseEnd.getText().toString(),
+                dropdown.getSelectedItem().toString(), courseMentorName.getText().toString(), courseMentorPhone.getText().toString(),
+                courseMentorEmail.getText().toString(), noteText.getText().toString());
+        finish();
+    }
 }

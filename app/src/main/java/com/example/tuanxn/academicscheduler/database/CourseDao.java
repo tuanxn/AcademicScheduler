@@ -13,7 +13,7 @@ import java.util.List;
 public interface CourseDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(CourseEntity courseEntity);
+    long insert(CourseEntity courseEntity);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(List<CourseEntity> courses);
@@ -24,7 +24,7 @@ public interface CourseDao {
     @Query("SELECT * FROM courses WHERE id=:id")
     CourseEntity getById(int id);
 
-    @Query("SELECT * FROM courses ORDER BY endDate DESC")
+    @Query("SELECT * FROM courses ORDER BY endDate ASC")
     LiveData<List<CourseEntity>> getAll();
 
     @Query("DELETE FROM courses")
