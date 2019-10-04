@@ -8,6 +8,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,6 +17,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.tuanxn.academicscheduler.database.AppRepository;
 import com.example.tuanxn.academicscheduler.database.AssessmentEntity;
@@ -110,12 +112,37 @@ public class ModifyAssessmentActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == android.R.id.home) {
-            try {
-                saveAndReturn();
-            } catch (ParseException e) {
-                e.printStackTrace();
+            boolean validated = true;
+            String errorMessage = "";
+            if (TextUtils.isEmpty(aTitle.getText().toString().trim())) {
+                errorMessage += "Missing assessment title\n";
+                validated = false;
             }
-            return true;
+            if (TextUtils.isEmpty(aStart.getText().toString().trim())) {
+                errorMessage += "Missing assessment start\n";
+                validated = false;
+            } else if(!aStart.getText().toString().matches("\\d{2}/\\d{2}/\\d{4}")) {
+                errorMessage += "Incorrect date format for assessment date\nPlease enter MM/dd/yyyy\n";
+                validated = false;
+            }
+            if (TextUtils.isEmpty(aEnd.getText().toString().trim())) {
+                errorMessage += "Missing assessment end\n";
+                validated = false;
+            } else if(!aEnd.getText().toString().matches("\\d{2}/\\d{2}/\\d{4}")) {
+                errorMessage += "Incorrect date format for assessment date\nPlease enter MM/dd/yyyy\n";
+                validated = false;
+            }
+            if (validated) {
+                try {
+                    saveAndReturn();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                return true;
+            }else {
+                Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show();
+                return true;
+            }
         }else if(item.getItemId() == R.id.action_delete_assessment) {
             maViewModel.deleteAssessment();
             finish();

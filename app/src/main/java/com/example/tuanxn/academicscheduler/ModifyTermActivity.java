@@ -57,20 +57,26 @@ public class ModifyTermActivity extends AppCompatActivity {
     @OnClick(R.id.addCourseButton)
     void fabClickHandler() {
         boolean validated = true;
-        String errorMessage = "";
-        if (TextUtils.isEmpty(title.getText().toString().trim())) {
-            errorMessage += "Missing term title\n";
-            validated = false;
-        }
-        if (TextUtils.isEmpty(termStart.getText().toString().trim())) {
-            errorMessage += "Missing term start\n";
-            validated = false;
-        }
-        if (TextUtils.isEmpty(termEnd.getText().toString().trim())) {
-            errorMessage += "Missing term end\n";
-            validated = false;
-        }
-        if (validated) {
+            String errorMessage = "";
+            if (TextUtils.isEmpty(title.getText().toString().trim())) {
+                errorMessage += "Missing term title\n";
+                validated = false;
+            }
+            if (TextUtils.isEmpty(termStart.getText().toString().trim())) {
+                errorMessage += "Missing term start\n";
+                validated = false;
+            } else if(!termStart.getText().toString().matches("\\d{2}/\\d{2}/\\d{4}")) {
+                errorMessage += "Incorrect date format for start date\nPlease enter MM/dd/yyyy\n";
+                validated = false;
+            }
+            if (TextUtils.isEmpty(termEnd.getText().toString().trim())) {
+                errorMessage += "Missing term end\n";
+                validated = false;
+            } else if(!termEnd.getText().toString().matches("\\d{2}/\\d{2}/\\d{4}")) {
+                errorMessage += "Incorrect date format for end date\nPlease enter MM/dd/yyyy\n";
+                validated = false;
+            }
+            if (validated) {
             try {
                 saveAndReturn();
                 Log.i("test", "TermId: " + Integer.toString(AppRepository.createdTermId));
@@ -79,7 +85,6 @@ public class ModifyTermActivity extends AppCompatActivity {
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-
         }else {
             Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show();
         }
@@ -167,12 +172,15 @@ public class ModifyTermActivity extends AppCompatActivity {
             if (TextUtils.isEmpty(termStart.getText().toString().trim())) {
                 errorMessage += "Missing term start\n";
                 validated = false;
-                // TODO
-            } else if(termStart.getText().toString().matches("\\d{2}")) {
-
+            } else if(!termStart.getText().toString().matches("\\d{2}/\\d{2}/\\d{4}")) {
+                errorMessage += "Incorrect date format for start date\nPlease enter MM/dd/yyyy\n";
+                validated = false;
             }
             if (TextUtils.isEmpty(termEnd.getText().toString().trim())) {
                 errorMessage += "Missing term end\n";
+                validated = false;
+            } else if(!termEnd.getText().toString().matches("\\d{2}/\\d{2}/\\d{4}")) {
+                errorMessage += "Incorrect date format for end date\nPlease enter MM/dd/yyyy\n";
                 validated = false;
             }
             if (validated) {

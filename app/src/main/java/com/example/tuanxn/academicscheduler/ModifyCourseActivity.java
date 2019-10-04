@@ -11,6 +11,7 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -77,14 +78,50 @@ public class ModifyCourseActivity extends AppCompatActivity {
 
     @OnClick(R.id.addAssessmentButton)
     void fabClickHandler() {
-        try {
-            saveAndReturn();
-        } catch (ParseException e) {
-            e.printStackTrace();
+        boolean validated = true;
+        String errorMessage = "";
+        if (TextUtils.isEmpty(title.getText().toString().trim())) {
+            errorMessage += "Missing course title\n";
+            validated = false;
         }
-        Log.i("test", "CourseId: " + Integer.toString(AppRepository.createdCourseId));
-        Intent intent = new Intent(this, ModifyAssessmentActivity.class);
-        startActivity(intent);
+        if (TextUtils.isEmpty(courseStart.getText().toString().trim())) {
+            errorMessage += "Missing course start\n";
+            validated = false;
+        } else if(!courseStart.getText().toString().matches("\\d{2}/\\d{2}/\\d{4}")) {
+            errorMessage += "Incorrect date format for course date\nPlease enter MM/dd/yyyy\n";
+            validated = false;
+        }
+        if (TextUtils.isEmpty(courseEnd.getText().toString().trim())) {
+            errorMessage += "Missing course end\n";
+            validated = false;
+        } else if(!courseEnd.getText().toString().matches("\\d{2}/\\d{2}/\\d{4}")) {
+            errorMessage += "Incorrect date format for course date\nPlease enter MM/dd/yyyy\n";
+            validated = false;
+        }
+        if (TextUtils.isEmpty(courseMentorName.getText().toString().trim())) {
+            errorMessage += "Missing course mentor name\n";
+            validated = false;
+        }
+        if (TextUtils.isEmpty(courseMentorPhone.getText().toString().trim())) {
+            errorMessage += "Missing course mentor phone\n";
+            validated = false;
+        }
+        if (TextUtils.isEmpty(courseMentorEmail.getText().toString().trim())) {
+            errorMessage += "Missing course mentor email\n";
+            validated = false;
+        }
+        if (validated) {
+            try {
+                saveAndReturn();
+                Log.i("test", "CourseId: " + Integer.toString(AppRepository.createdCourseId));
+                Intent intent = new Intent(this, ModifyAssessmentActivity.class);
+                startActivity(intent);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }else {
+            Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -243,12 +280,49 @@ public class ModifyCourseActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if(id == android.R.id.home) {
-            try {
-                saveAndReturn();
-            } catch (ParseException e) {
-                e.printStackTrace();
+            boolean validated = true;
+            String errorMessage = "";
+            if (TextUtils.isEmpty(title.getText().toString().trim())) {
+                errorMessage += "Missing course title\n";
+                validated = false;
             }
-            return true;
+            if (TextUtils.isEmpty(courseStart.getText().toString().trim())) {
+                errorMessage += "Missing course start\n";
+                validated = false;
+            } else if(!courseStart.getText().toString().matches("\\d{2}/\\d{2}/\\d{4}")) {
+                errorMessage += "Incorrect date format for course date\nPlease enter MM/dd/yyyy\n";
+                validated = false;
+            }
+            if (TextUtils.isEmpty(courseEnd.getText().toString().trim())) {
+                errorMessage += "Missing course end\n";
+                validated = false;
+            } else if(!courseEnd.getText().toString().matches("\\d{2}/\\d{2}/\\d{4}")) {
+                errorMessage += "Incorrect date format for course date\nPlease enter MM/dd/yyyy\n";
+                validated = false;
+            }
+            if (TextUtils.isEmpty(courseMentorName.getText().toString().trim())) {
+                errorMessage += "Missing course mentor name\n";
+                validated = false;
+            }
+            if (TextUtils.isEmpty(courseMentorPhone.getText().toString().trim())) {
+                errorMessage += "Missing course mentor phone\n";
+                validated = false;
+            }
+            if (TextUtils.isEmpty(courseMentorEmail.getText().toString().trim())) {
+                errorMessage += "Missing course mentor email\n";
+                validated = false;
+            }
+            if (validated) {
+                try {
+                    saveAndReturn();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                return true;
+            }else {
+                Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show();
+                return true;
+            }
         }else if(id == R.id.action_add_note) {
             addNoteClickHandler();
             return true;
@@ -260,14 +334,50 @@ public class ModifyCourseActivity extends AppCompatActivity {
     }
 
     private void addNoteClickHandler() {
-        try {
-            saveAndReturn();
-        } catch (ParseException e) {
-            e.printStackTrace();
+        boolean validated = true;
+        String errorMessage = "";
+        if (TextUtils.isEmpty(title.getText().toString().trim())) {
+            errorMessage += "Missing course title\n";
+            validated = false;
         }
-        Log.i("test", "CourseId: " + Integer.toString(AppRepository.createdCourseId));
-        Intent intent = new Intent(this, NoteActivity.class);
-        startActivity(intent);
+        if (TextUtils.isEmpty(courseStart.getText().toString().trim())) {
+            errorMessage += "Missing course start\n";
+            validated = false;
+        } else if(!courseStart.getText().toString().matches("\\d{2}/\\d{2}/\\d{4}")) {
+            errorMessage += "Incorrect date format for course date\nPlease enter MM/dd/yyyy\n";
+            validated = false;
+        }
+        if (TextUtils.isEmpty(courseEnd.getText().toString().trim())) {
+            errorMessage += "Missing course end\n";
+            validated = false;
+        } else if(!courseEnd.getText().toString().matches("\\d{2}/\\d{2}/\\d{4}")) {
+            errorMessage += "Incorrect date format for course date\nPlease enter MM/dd/yyyy\n";
+            validated = false;
+        }
+        if (TextUtils.isEmpty(courseMentorName.getText().toString().trim())) {
+            errorMessage += "Missing course mentor name\n";
+            validated = false;
+        }
+        if (TextUtils.isEmpty(courseMentorPhone.getText().toString().trim())) {
+            errorMessage += "Missing course mentor phone\n";
+            validated = false;
+        }
+        if (TextUtils.isEmpty(courseMentorEmail.getText().toString().trim())) {
+            errorMessage += "Missing course mentor email\n";
+            validated = false;
+        }
+        if (validated) {
+            try {
+                saveAndReturn();
+                Log.i("test", "CourseId: " + Integer.toString(AppRepository.createdCourseId));
+                Intent intent = new Intent(this, NoteActivity.class);
+                startActivity(intent);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }else {
+            Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void saveAndReturn() throws ParseException {
