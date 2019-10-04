@@ -2,18 +2,23 @@ package com.example.tuanxn.academicscheduler;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.ActivityNotFoundException;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.tuanxn.academicscheduler.database.CourseEntity;
 import com.example.tuanxn.academicscheduler.database.NoteEntity;
@@ -44,13 +49,18 @@ public class NoteActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         initViewModel();
-
+        
+        // User will need to add gmail account to AVD
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setType("message/rfc822");
+                intent.putExtra(Intent.EXTRA_SUBJECT, "Here are my notes");
+                intent.putExtra(Intent.EXTRA_TEXT, nTextView.getText().toString());
+                Intent mailer = Intent.createChooser(intent, null);
+                startActivity(mailer);
             }
         });
 
@@ -89,8 +99,13 @@ public class NoteActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            saveAndReturn();
-            return true;
+            if(TextUtils.isEmpty(nTextView.getText().toString().trim())) {
+                Toast.makeText(this, "Note cannot be empty", Toast.LENGTH_SHORT).show();
+                return true;
+            }else {
+                saveAndReturn();
+                return true;
+            }
         } else if (item.getItemId() == R.id.action_delete_note) {
             nViewModel.deleteNote();
             finish();

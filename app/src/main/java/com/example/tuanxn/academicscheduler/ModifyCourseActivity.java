@@ -80,6 +80,10 @@ public class ModifyCourseActivity extends AppCompatActivity {
     void fabClickHandler() {
         boolean validated = true;
         String errorMessage = "";
+        if (assessmentData.size() == 5) {
+            errorMessage += "Cannot add more than 5 assessments\nPlease delete an assessment first";
+            validated = false;
+        }
         if (TextUtils.isEmpty(title.getText().toString().trim())) {
             errorMessage += "Missing course title\n";
             validated = false;
