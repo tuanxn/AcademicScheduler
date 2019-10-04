@@ -167,6 +167,9 @@ public class ModifyTermActivity extends AppCompatActivity {
             if (TextUtils.isEmpty(termStart.getText().toString().trim())) {
                 errorMessage += "Missing term start\n";
                 validated = false;
+                // TODO
+            } else if(termStart.getText().toString().matches("\\d{2}")) {
+
             }
             if (TextUtils.isEmpty(termEnd.getText().toString().trim())) {
                 errorMessage += "Missing term end\n";
