@@ -49,7 +49,7 @@ public class NoteActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         initViewModel();
-        
+
         // User will need to add gmail account to AVD
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
