@@ -11,4 +11,6 @@
     <string name="title_activity_modify_course">Edit Course</string>
     <string name="title_activity_modify_assessment">Edit Assessment</string>
     <string name="title_activity_note">NoteActivity</string>
+    <string name="channel_name">notification channel</string>
+    <string name="channel_description">notification channel description</string>
 </resources>

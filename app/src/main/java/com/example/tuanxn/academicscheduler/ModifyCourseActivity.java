@@ -1,7 +1,10 @@
 package com.example.tuanxn.academicscheduler;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -333,6 +336,34 @@ public class ModifyCourseActivity extends AppCompatActivity {
         }else if(id == R.id.action_delete_course) {
             mcViewModel.deleteCourse();
             finish();
+        }else if(id == R.id.action_course_start_alarm) {
+            Intent intent=new Intent(this,MyReceiver.class);
+            intent.putExtra("TITLE", "Course " + title.getText().toString());
+            intent.putExtra("DATE", courseStart.getText().toString());
+            intent.putExtra("NOTIFYMESSAGE", " starting ");
+            PendingIntent sender= PendingIntent.getBroadcast(this,0,intent,0);
+            AlarmManager alarmManager=(AlarmManager)getSystemService(Context.ALARM_SERVICE);
+            try {
+                alarmManager.set(AlarmManager.RTC_WAKEUP, DateConverter.stringToMilli(courseStart.getText().toString()), sender);
+                Log.i("test", DateConverter.stringToMilli(courseStart.getText().toString()).toString());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            Toast.makeText(this, "alarm set for " + title.getText().toString(), Toast.LENGTH_SHORT).show();
+        }else if(id == R.id.action_course_end_alarm) {
+            Intent intent=new Intent(this,MyReceiver.class);
+            intent.putExtra("TITLE", "Course " + title.getText().toString());
+            intent.putExtra("DATE", courseEnd.getText().toString());
+            intent.putExtra("NOTIFYMESSAGE", " ending ");
+            PendingIntent sender= PendingIntent.getBroadcast(this,0,intent,0);
+            AlarmManager alarmManager=(AlarmManager)getSystemService(Context.ALARM_SERVICE);
+            try {
+                alarmManager.set(AlarmManager.RTC_WAKEUP, DateConverter.stringToMilli(courseEnd.getText().toString()), sender);
+                Log.i("test", DateConverter.stringToMilli(courseEnd.getText().toString()).toString());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            Toast.makeText(this, "alarm set for " + title.getText().toString(), Toast.LENGTH_SHORT).show();
         }
         return super.onOptionsItemSelected(item);
     }

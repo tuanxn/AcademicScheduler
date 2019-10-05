@@ -2,23 +2,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.example.academicscheduler.ModifyCourseActivity">
+    tools:context="com.example.academicscheduler.ModifyAssessmentActivity">
     <item
-        android:id="@+id/action_add_note"
-        android:orderInCategory="100"
-        android:title="Add note"
-        app:showAsAction="always" />
-    <item
-        android:id="@+id/action_course_start_alarm"
+        android:id="@+id/action_assessment_start_alarm"
         android:orderInCategory="100"
         android:title="Add start alarm"
         app:showAsAction="never" />
     <item
-        android:id="@+id/action_course_end_alarm"
+        android:id="@+id/action_assessment_end_alarm"
         android:orderInCategory="100"
         android:title="Add end alarm"
         app:showAsAction="never" />
-
-
-
 </menu>

@@ -1,7 +1,11 @@
 package com.example.tuanxn.academicscheduler;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -21,6 +25,7 @@ import android.widget.Toast;
 
 import com.example.tuanxn.academicscheduler.database.AppRepository;
 import com.example.tuanxn.academicscheduler.database.AssessmentEntity;
+import com.example.tuanxn.academicscheduler.utilities.DateConverter;
 import com.example.tuanxn.academicscheduler.viewmodel.ModifyAssessmentViewModel;
 
 import java.text.ParseException;
@@ -102,8 +107,10 @@ public class ModifyAssessmentActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_assessment_alarms, menu);
         if (!mNewAssessment) {
-            MenuInflater inflater = getMenuInflater();
+
             inflater.inflate(R.menu.menu_delete_assessment, menu);
         }
         return super.onCreateOptionsMenu(menu);
@@ -146,6 +153,34 @@ public class ModifyAssessmentActivity extends AppCompatActivity {
         }else if(item.getItemId() == R.id.action_delete_assessment) {
             maViewModel.deleteAssessment();
             finish();
+        }else if(item.getItemId() == R.id.action_assessment_start_alarm) {
+            Intent intent=new Intent(this,MyReceiver.class);
+            intent.putExtra("TITLE", aTitle.getText().toString());
+            intent.putExtra("DATE", aStart.getText().toString());
+            intent.putExtra("NOTIFYMESSAGE", " starting ");
+            PendingIntent sender= PendingIntent.getBroadcast(this,0,intent,0);
+            AlarmManager alarmManager=(AlarmManager)getSystemService(Context.ALARM_SERVICE);
+            try {
+                alarmManager.set(AlarmManager.RTC_WAKEUP, DateConverter.stringToMilli(aStart.getText().toString()), sender);
+                Log.i("test", DateConverter.stringToMilli(aStart.getText().toString()).toString());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            Toast.makeText(this, "alarm set for " + aTitle.getText().toString(), Toast.LENGTH_SHORT).show();
+        }else if(item.getItemId() == R.id.action_assessment_end_alarm) {
+            Intent intent=new Intent(this,MyReceiver.class);
+            intent.putExtra("TITLE", aTitle.getText().toString());
+            intent.putExtra("DATE", aEnd.getText().toString());
+            intent.putExtra("NOTIFYMESSAGE", " ending ");
+            PendingIntent sender= PendingIntent.getBroadcast(this,0,intent,0);
+            AlarmManager alarmManager=(AlarmManager)getSystemService(Context.ALARM_SERVICE);
+            try {
+                alarmManager.set(AlarmManager.RTC_WAKEUP, DateConverter.stringToMilli(aEnd.getText().toString()), sender);
+                Log.i("test", DateConverter.stringToMilli(aEnd.getText().toString()).toString());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            Toast.makeText(this, "alarm set for " + aTitle.getText().toString(), Toast.LENGTH_SHORT).show();
         }
         return super.onOptionsItemSelected(item);
     }
